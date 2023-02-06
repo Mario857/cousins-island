@@ -34,14 +34,14 @@ const BoxesPage = () => {
 				</Heading>
 				<Stack direction='row' alignItems='center'>
 					<Typography variant='h500' color='text.secondary' component='h3' mr={1}>
-						LUA Power
+						COUSIN Power
 					</Typography>
 					<Typography variant='h500' color='text.primary' component='h3' mr={2}>
 						6,854.32
 					</Typography>
 					<a href={`${ROUTES.STAKING_APP}/trade`} target='_blank'>
 						<Button variant='contained' size='medium' color='primary' type='button'>
-							BUY MORE $LUA
+							BUY MORE $COUSIN
 						</Button>
 					</a>
 				</Stack>

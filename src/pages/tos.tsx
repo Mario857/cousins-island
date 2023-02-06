@@ -511,7 +511,7 @@ const TermsOfServicePage = () => {
 					<li>technical details of minting procedure;</li>
 					<li>
 						possible restrictions concerning the access to minted NFTs (including
-						Whitelists and/or the minimum level of the LUA Power score).
+						Whitelists and/or the minimum level of the COUSIN Power score).
 					</li>
 				</ul>
 

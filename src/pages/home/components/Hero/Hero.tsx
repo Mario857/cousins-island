@@ -61,7 +61,7 @@ const Hero = () => {
           Discover NFTs today
         </Heading>
         <StyledDescription variant="h600" component="h3" mb={6}>
-          Buy, Sell, Bid for NFTs on our marketplace and be rewarded with LUA
+          Buy, Sell, Bid for NFTs on our marketplace and be rewarded with COUSIN
           Power
         </StyledDescription>
       </Box>
