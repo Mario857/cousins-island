@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 import Router from './Router'
 import theme from 'theme/theme'
@@ -42,13 +42,15 @@ const App = () => {
 	// }, [dispatch, wallet, collections]);
 
 	return (
-		<StyledThemeProvider theme={theme}>
+		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
-				<GlobalStyles />
-				<WalletRefetchStates />
-				<Router />
+				<StyledThemeProvider theme={theme}>
+					<GlobalStyles />
+					<WalletRefetchStates />
+					<Router />
+				</StyledThemeProvider>
 			</ThemeProvider>
-		</StyledThemeProvider>
+		</StyledEngineProvider>
 	)
 }
 
