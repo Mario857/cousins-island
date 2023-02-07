@@ -24,10 +24,10 @@ const Router = () => {
 	return (
 		<>
 			<Switch>
-				{/* <Route exact path={ROUTES.PRIVACY_POLICY} component={PrivacyPolicyPage} />
-				<Route exact path={ROUTES.TOS} component={TermsOfServicePage} /> */}
+				<Route exact path={ROUTES.PRIVACY_POLICY} component={PrivacyPolicyPage} />
+				<Route exact path={ROUTES.TOS} component={TermsOfServicePage} />
 				<Route exact path={ROUTES.HOME} component={HomePage} />
-				{/* <Route exact path={ROUTES.COLLECTIONS} component={CollectionsPage} />
+				<Route exact path={ROUTES.COLLECTIONS} component={CollectionsPage} />
 				<Route
 					exact
 					path={`${ROUTES.COLLECTIONS}/:collectionAddress`}
@@ -83,7 +83,7 @@ const Router = () => {
 					}}
 				/>
 				<Route exact path={ROUTES.BOXES} component={BoxesPage} />
-				<Route exact path={`${ROUTES.BOXES}/:id`} component={BoxPage} /> */}
+				<Route exact path={`${ROUTES.BOXES}/:id`} component={BoxPage} />
 			</Switch>
 			{/* <RouterScrollRestoration /> */}
 		</>
