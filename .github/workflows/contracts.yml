@@ -33,6 +33,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Tools are built with current stable Rust; the contracts with 1.81 below.
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install cosmwasm-check
+        run: cargo +stable install cosmwasm-check --version "~2.2" --locked
+      - name: Install wasm-opt
+        run: npm install --global binaryen@123 && wasm-opt --version
       # Rust 1.81 is the newest toolchain whose Wasm output Terra's wasmvm 2.2 accepts
       # (1.82+ turns on reference-types, which wasmvm 2.2 rejects).
       - uses: dtolnay/rust-toolchain@1.81.0
@@ -44,11 +50,7 @@ jobs:
       - name: Compile
         env:
           RUSTFLAGS: "-C link-arg=-s"
-        run: cargo build --locked --release --lib --target wasm32-unknown-unknown -p cousins-marketplace -p cousins-nft
-      - name: Install wasm-opt and cosmwasm-check
-        run: |
-          npm install --global binaryen@123
-          cargo install cosmwasm-check --version "~2.2" --locked
+        run: cargo +1.81.0 build --locked --release --lib --target wasm32-unknown-unknown -p cousins-marketplace -p cousins-nft
       - name: Optimize
         run: |
           mkdir -p artifacts
