@@ -8,8 +8,8 @@ import MenuList from '@mui/material/MenuList';
 import { useElementWidth } from 'hooks/useElementWidth';
 
 interface DropdownProps {
-  startIcon?: JSX.Element;
-  endIcon?: JSX.Element;
+  startIcon?: React.JSX.Element;
+  endIcon?: React.JSX.Element;
   id: string;
   options: {
     label: string;

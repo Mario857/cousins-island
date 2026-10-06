@@ -11,16 +11,16 @@ const TrendingCollections = () => {
   );
 
   return (
-    <Box mt={{ xs: 8, md: 16 }}>
+    <Box sx={{ mt: { xs: 8, md: 16 } }}>
       <Heading
         variant="h600"
         component="h2"
-        color="text.primary"
         sx={{
+          color: 'text.primary',
+          mb: { xs: 3, md: 6 },
           fontSize: { md: '56px !important' },
           lineHeight: { md: '84px !important' },
         }}
-        mb={{ xs: 3, md: 6 }}
       >
         <AppleIcon
           size="large"

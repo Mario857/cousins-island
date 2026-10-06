@@ -10,7 +10,6 @@ import {
 } from './Notification.styled';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import LazyLoad from 'react-lazyload';
 import Fade from '@mui/material/Fade';
 import { LatestTransactionDetails } from 'utils/blockchain/blockchain.interface';
 import { getShortText } from 'utils/getShortText';
@@ -50,7 +49,7 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
 
   const isUnread = latestReadTimestamp < timestamp;
 
-  const linkComponent = (isAnchorElement: boolean, children: JSX.Element) => {
+  const linkComponent = (isAnchorElement: boolean, children: React.JSX.Element) => {
     if (isAnchorElement) {
       return <a target="_blank" href={terraFinderUrl}>{children}</a>;
     } else {
@@ -82,8 +81,7 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
     <StyledNotification>
       {linkComponent(notificationDetails.redirectToTerraFinder, <Stack
         direction="row"
-        alignItems={{ md: 'center' }}
-        justifyContent="space-between"
+        sx={{ alignItems: { md: 'center' }, justifyContent: 'space-between' }}
         spacing={2}
       >
         <div>
@@ -105,22 +103,20 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
         </div>
         <div>
           <StyledBadge>{notificationDetails.badge}</StyledBadge>
-          <Stack direction="row" spacing={1} mt={1}>
+          <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
             <div>
               <StyledDot color={isUnread ? 'red' : 'gray'} />
             </div>
             <StyledTextContainer>
               <Typography
                 variant="body2"
-                color="text.primary"
-                mb={1}
-                sx={{ lineHeight: '20px !important' }}
+                sx={{ color: 'text.primary', mb: 1, lineHeight: '20px !important' }}
               >
                 {shortBuyerAddress} {notificationDetails.description}{' '}
                 <Typography
                   variant="h200"
                   component="h6"
-                  display="inline-block"
+                  sx={{ display: 'inline-block' }}
                 >
                   {tokenDetails?.name}
                 </Typography>{' '}
@@ -128,14 +124,14 @@ const Notification: React.FC<NotificationProps> = ({ notification }) => {
                 <Typography
                   variant="h200"
                   component="h6"
-                  display="inline-block"
+                  sx={{ display: 'inline-block' }}
                 >
                   {currency === 'LUNA'
                     ? formatLUNADecimal(price)
                     : formatUSTDecimal(price)}
                 </Typography>{' '}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {formattedDate} UTC
               </Typography>
             </StyledTextContainer>

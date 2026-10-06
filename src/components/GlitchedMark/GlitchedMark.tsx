@@ -6,7 +6,7 @@ const GlitchedMark = () => {
   const title = 'Glitched traits in this NFT';
 
   return (
-    <Box ml={1} component="span">
+    <Box sx={{ ml: 1 }} component="span">
       <Tooltip title={title} arrow placement="top">
         <GlitchedSignIcon
           fontSize="small"

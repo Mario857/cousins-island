@@ -3,7 +3,7 @@ import {
   StyledImagePlaceholder,
   StyledImageWrapper,
 } from './Image.styled';
-import LazyLoad from 'react-lazyload';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { useState } from 'react';
 import Fade from '@mui/material/Fade';
 import VideoToken from 'components/VideoToken/VideoToken';
@@ -31,7 +31,7 @@ const Image: React.FC<ImageProps> = ({ isVideo = false }) => {
     <StyledImageWrapper>
       <StyledImagePlaceholder />
       {imageURL && imageURL.length > 0 && (
-        <LazyLoad>
+        <LazyLoadComponent threshold={0}>
           <Fade in={true}>
             <StyledImage
               src={imageURL}
@@ -41,7 +41,7 @@ const Image: React.FC<ImageProps> = ({ isVideo = false }) => {
               loaded={loaded}
             />
           </Fade>
-        </LazyLoad>
+        </LazyLoadComponent>
       )}
     </StyledImageWrapper>
   ) : (

@@ -33,23 +33,20 @@ const Trait: React.FC<TraitProps> = ({ trait, traitFilterURL }) => {
       <StyledTrait>
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          px={3}
-          py={2}
+          sx={{ alignItems: 'center', justifyContent: 'space-between', px: 3, py: 2 }}
         >
           <div>
-            <Typography variant="body2" color="text.secondary" mb="4px">
+            <Typography variant="body2" sx={{ color: 'text.secondary', mb: '4px' }}>
               {toCapitalize(trait.name || '')}
             </Typography>
-            <Typography variant="h200" color="text.primary" component="h6">
+            <Typography variant="h200" sx={{ color: 'text.primary' }} component="h6">
               {trait.value}
             </Typography>
           </div>
           {trait.rarity > 0 && (
             <Typography
               variant="h200"
-              color="rgba(255, 255, 255, 0.72)"
+              sx={{ color: 'rgba(255, 255, 255, 0.72)' }}
               component="h6"
             >
               {trait.rarity}%
@@ -93,16 +90,15 @@ const Traits = () => {
 
   return (
     <>
-      <Box px={3} py={2}>
+      <Box sx={{ px: 3, py: 2 }}>
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="space-between"
+          sx={{ alignItems: 'center', justifyContent: 'space-between' }}
         >
-          <Typography variant="h200" color="text.primary" component="h6">
+          <Typography variant="h200" sx={{ color: 'text.primary' }} component="h6">
             Name
           </Typography>
-          <Typography variant="h200" color="text.primary" component="h6">
+          <Typography variant="h200" sx={{ color: 'text.primary' }} component="h6">
             Rarity
           </Typography>
         </Stack>

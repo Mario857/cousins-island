@@ -76,16 +76,15 @@ const CollectionFilter: React.FC<CollectionFilterProps> = ({
           onChange={handleSearch}
         />
 
-        <Box height={225} sx={{ overflowY: 'scroll' }}>
+        <Box sx={{ height: 225, overflowY: 'scroll' }}>
           {collectionsToRender && collectionsToRender.length > 0 ? (
             <>
               {collectionsToRender.map((collection) => (
                 <Stack
                   direction="row"
-                  alignItems="center"
+                  sx={{ alignItems: 'center', mb: 2 }}
                   spacing={1}
                   key={`collection-filter-${collection.nftContractAddress}`}
-                  mb={2}
                   onClick={() => {
                     if (setSelectedContractAddress) {
                       setSelectedContractAddress(
@@ -107,7 +106,7 @@ const CollectionFilter: React.FC<CollectionFilterProps> = ({
                       alt={collection.title}
                     />
                   )}
-                  <Typography variant="body2" color="text.primary" noWrap>
+                  <Typography variant="body2" sx={{ color: 'text.primary' }} noWrap>
                     {collection.title}
                   </Typography>
                   <ExclusiveMark
@@ -117,14 +116,14 @@ const CollectionFilter: React.FC<CollectionFilterProps> = ({
               ))}
             </>
           ) : (
-            <Typography variant="body3" color="text.primary">
+            <Typography variant="body3" sx={{ color: 'text.primary' }}>
               No results
             </Typography>
           )}
         </Box>
       </>
     ) : (
-      <Typography variant="body3" color="text.primary">
+      <Typography variant="body3" sx={{ color: 'text.primary' }}>
         No collections
       </Typography>
     );
@@ -145,15 +144,12 @@ const CollectionFilter: React.FC<CollectionFilterProps> = ({
 
   return (
     <>
-      <Typography variant="h300" color="text.primary" mb={1} component="p">
+      <Typography variant="h300" sx={{ color: 'text.primary', mb: 1 }} component="p">
         Collection Filter
       </Typography>
       {options && (
         <Autocomplete
           options={options}
-          getOptionSelected={(option: Option) =>
-            option.value === selectedContractAddress
-          }
           isOptionEqualToValue={(option: Option, value: string) =>
             option.value === value
           }
@@ -162,9 +158,11 @@ const CollectionFilter: React.FC<CollectionFilterProps> = ({
               if (option) onContractAddressUpdate(option.value);
             }
           }}
-          ListboxProps={{
-            style: {
-              maxHeight: 180,
+          slotProps={{
+            listbox: {
+              style: {
+                maxHeight: 180,
+              },
             },
           }}
         />

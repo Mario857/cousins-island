@@ -15,9 +15,9 @@ import FiltersMobile from '../FiltersMobile/FiltersMobile'
 import { BoltIcon, FlameIcon, ShoppingBagIcon } from 'theme/icons'
 import { useMediaQuery } from 'react-responsive'
 import Filters from '../Filters/Filters'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import queryString from 'query-string'
-import { useWallet, WalletStatus } from '@terra-money/wallet-provider'
+import { useWallet, WalletStatus } from 'wallet'
 import NotFound from 'components/NotFound/NotFound'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Alert from 'components/Alert/Alert'
@@ -32,7 +32,7 @@ export interface FiltersComponentProps {
 	types: {
 		label: string
 		value: string
-		icon?: JSX.Element
+		icon?: React.JSX.Element
 	}[]
 	resetFilters: () => void
 	setSelectedContractAddress?: React.Dispatch<React.SetStateAction<string>>
@@ -59,7 +59,7 @@ const Activity: React.FC<TransactionsProps> = ({
 	const isMobile = useMediaQuery({ maxWidth: 991 })
 
 	const location = useLocation()
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	const parsedQuery = queryString.parse(location.search)
 
@@ -89,10 +89,13 @@ const Activity: React.FC<TransactionsProps> = ({
 
 		if (eventType !== 'all') queryToURL.eventType = eventType
 
-		history.replace({
-			pathname: location.pathname,
-			search: queryString.stringify(queryToURL),
-		})
+		navigate(
+			{
+				pathname: location.pathname,
+				search: queryString.stringify(queryToURL),
+			},
+			{ replace: true }
+		)
 	}
 
 	const handleSelectType = (newSelectedType: string) => {
@@ -190,13 +193,13 @@ const Activity: React.FC<TransactionsProps> = ({
 
 	useEffect(() => {
 		if (isMobile) {
-			window.Intercom('update', {
+			window.Intercom?.('update', {
 				hide_default_launcher: true,
 			})
 		}
 
 		return () => {
-			window.Intercom('update', {
+			window.Intercom?.('update', {
 				hide_default_launcher: false,
 			})
 		}
@@ -233,10 +236,13 @@ const Activity: React.FC<TransactionsProps> = ({
 		handleSelectType('all')
 		handleContractAddressUpdate('all')
 
-		history.replace({
-			pathname: location.pathname,
-			search: '',
-		})
+		navigate(
+			{
+				pathname: location.pathname,
+				search: '',
+			},
+			{ replace: true }
+		)
 	}
 
 	const filtersComponentProps = {
@@ -250,9 +256,9 @@ const Activity: React.FC<TransactionsProps> = ({
 
 	return (
 		<Grid container columnSpacing={4}>
-			<Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
+			<Grid size={{ xs: 12, md: 8 }} sx={{ order: { xs: 2, md: 1 } }}>
 				{loading.getTransactions ? (
-					<Box display='flex' justifyContent='center' mt={{ xs: 16, md: 24 }}>
+					<Box sx={{ display: 'flex', justifyContent: 'center', mt: { xs: 16, md: 24 } }}>
 						<LoadingSpinner size='large' color='secondary' />
 					</Box>
 				) : (
@@ -263,18 +269,15 @@ const Activity: React.FC<TransactionsProps> = ({
 								next={() => getLatestTransactions()}
 								hasMore={canLoadMore}
 								loader={
-									<Box display='flex' justifyContent='center' width='100%' mt={4}>
+									<Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 4 }}>
 										<LoadingSpinner size='large' color='secondary' />
 									</Box>
 								}
 								endMessage={
 									<Typography
 										variant='body3'
-										color='text.primary'
-										textAlign='center'
 										component='p'
-										mt={4}
-										sx={{ width: '100%' }}
+										sx={{ color: 'text.primary', textAlign: 'center', mt: 4, width: '100%' }}
 									>
 										That's all!
 									</Typography>
@@ -316,10 +319,8 @@ const Activity: React.FC<TransactionsProps> = ({
 				)}
 			</Grid>
 			<Grid
-				item
-				xs={12}
-				md={4}
-				order={{ xs: 1, md: 2 }}
+				size={{ xs: 12, md: 4 }}
+				sx={{ order: { xs: 1, md: 2 } }}
 				style={{ position: 'relative' }}
 			>
 				{isMobile ? (

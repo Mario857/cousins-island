@@ -1,9 +1,9 @@
-import terraUtils from './blockchain/real/terra-utils';
+import { getNetwork } from 'config/networks'
 
-const getTerraFinderUrl = (data: string, type = 'address') => {
-  const networkId = terraUtils.getNetworkId();
+/** Explorer link for an address (default) or a transaction hash (`type = 'tx'`). */
+const getTerraFinderUrl = (data: string, type: 'address' | 'tx' = 'address') => {
+	const network = getNetwork()
+	return type === 'tx' ? network.explorerTx(data) : network.explorerAddress(data)
+}
 
-  return `https://finder.terra.money/${networkId}/${type}/${data}`;
-};
-
-export default getTerraFinderUrl;
+export default getTerraFinderUrl

@@ -32,5 +32,4 @@ function SvgFilledHeart(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgFilledHeart);
-export default __webpack_public_path__ + "static/media/filled-heart.b65986c0.svg";
 export { ForwardRef as ReactComponent };

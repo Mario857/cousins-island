@@ -15,9 +15,7 @@ const Select: React.FC<SelectProps> = ({ children, label, error, ...rest }) => {
         <Typography
           variant="h300"
           component="label"
-          color="text.primary"
-          mb={1}
-          display="block"
+          sx={{ color: 'text.primary', mb: 1, display: 'block' }}
         >
           {label}
         </Typography>
@@ -29,7 +27,7 @@ const Select: React.FC<SelectProps> = ({ children, label, error, ...rest }) => {
         {children}
       </StyledSelect>
       {error && (
-        <Typography variant="body2" color="error.light" mt={1}>
+        <Typography variant="body2" sx={{ color: 'error.light', mt: 1 }}>
           {error}
         </Typography>
       )}

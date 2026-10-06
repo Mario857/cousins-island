@@ -46,9 +46,8 @@ const TxResult: React.FC<TxResultProps> = ({
     >
       <Typography
         variant="body2"
-        color="text.secondary"
+        sx={{ color: 'text.secondary', mt: successMessage ? 1 : 0 }}
         component="p"
-        mt={successMessage ? 1 : 0}
       >
         Tx Hash:{' '}
         <a href={txReceipt?.txTerraFinderUrl} target="_blank">

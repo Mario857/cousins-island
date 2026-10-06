@@ -1,21 +1,21 @@
-import { TxReceipt } from "../blockchain.interface";
+import type { TxReceipt } from '../blockchain.interface'
 
-const DEFAULT_DELAY = 1000;
+const DEFAULT_DELAY = 1000
 
-// Async version of sleep
-export async function sleep (ms: number = DEFAULT_DELAY): Promise<void> {
-  await new Promise(resolve => setTimeout(resolve, ms));
+export async function sleep(ms: number = DEFAULT_DELAY): Promise<void> {
+	await new Promise(resolve => setTimeout(resolve, ms))
 }
 
 export function getDefaultMockTxReceipt(): TxReceipt {
-  return {
-    txId: "793FF55A0D08EF9C9C7E56B07ADC1C094C93DD5F8663F2FF1CF049B01B5B9632",
-    txTerraFinderUrl: "https://finder.terra.money/bombay-12/tx/793FF55A",
-    txFee: "0.225000 UST"
-  }
+	const txId = '793FF55A0D08EF9C9C7E56B07ADC1C094C93DD5F8663F2FF1CF049B01B5B9632'
+	return {
+		txId,
+		txTerraFinderUrl: `https://terrasco.pe/testnet/tx/${txId}`,
+		txFee: '0.0123 LUNA',
+	}
 }
 
 export default {
-  sleep,
-  getDefaultMockTxReceipt, 
-};
+	sleep,
+	getDefaultMockTxReceipt,
+}

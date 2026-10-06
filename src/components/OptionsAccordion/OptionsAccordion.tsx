@@ -29,12 +29,12 @@ const OptionsAccordion: React.FC<OptionsAccordionProps> = ({
         expandIcon={<AngleDownIcon fontSize="small" />}
         onClick={handleExpand}
       >
-        <Typography variant="body2" color="text.primary">
+        <Typography variant="body2" sx={{ color: 'text.primary' }}>
           {heading}
         </Typography>
       </AccordionSummary>
       <StyledAccordionDetails
-        scrollbar={scrollbar ? 'show' : 'hide'}
+        $scrollbar={scrollbar ? 'show' : 'hide'}
         sx={{ maxHeight }}
       >
         {children}

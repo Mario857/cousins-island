@@ -57,43 +57,41 @@ const Price: React.FC<PriceProps> = ({
 	const convertedPrice = getConvertedPrice()
 
 	return (
-		<Box p={3}>
-			<Typography variant='body3' color='text.primary' component='p'>
+		<Box sx={{ p: 3 }}>
+			<Typography variant='body3' sx={{ color: 'text.primary' }} component='p'>
 				{label}
 			</Typography>
 			{sellPriceCurrency && sellPriceAmount ? (
 				<>
 					<Stack
 						direction={{ xs: 'column', md: 'row' }}
-						justifyContent='space-between'
-						mt={{ xs: 1, md: 2 }}
+						sx={{ justifyContent: 'space-between', mt: { xs: 1, md: 2 } }}
 					>
-						<Stack direction='row' alignItems='center' spacing={1}>
+						<Stack direction='row' sx={{ alignItems: 'center' }} spacing={1}>
 							<LazyLoadImage
 								alt={sellPriceCurrency}
 								src={
 									sellPriceCurrency === 'LUNA'
-										? '/images/terra-luna-large.png'
+										? '/images/luna.svg'
 										: '/images/ust-large.png'
 								}
 								width={isMobile ? '21px' : '28px'}
 								height={isMobile ? '21px' : '28px'}
 							/>
-							<Stack direction='row' alignItems='flex-end'>
+							<Stack direction='row' sx={{ alignItems: 'flex-end' }}>
 								<Typography
 									variant='h600'
-									color='text.primary'
 									component='h3'
-									sx={{ lineHeight: '32px !important' }}
+									sx={{ color: 'text.primary', lineHeight: '32px !important' }}
 								>
 									{formatDecimal(sellPriceAmount || 0)}
 								</Typography>
 								<Typography
 									variant={isMobile ? 'h600' : 'h500'}
-									color='text.secondary'
 									component='h4'
-									ml={1}
 									sx={{
+										color: 'text.secondary',
+										ml: 1,
 										lineHeight: {
 											xs: '32px !important',
 											md: '24px !important',
@@ -105,7 +103,7 @@ const Price: React.FC<PriceProps> = ({
 							</Stack>
 						</Stack>
 						{convertedPrice && (
-							<Typography variant='body4' color='rgba(255, 255, 255, 0.7)'>
+							<Typography variant='body4' sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
 								~ {convertedPrice}
 							</Typography>
 						)}
@@ -113,19 +111,18 @@ const Price: React.FC<PriceProps> = ({
 					{highestBid && !tokenLoaders?.getAllBidsForToken && (
 						<Stack
 							direction={{ xs: 'column', md: 'row' }}
-							alignItems={{ md: 'center' }}
+							sx={{ alignItems: { md: 'center' }, mt: 4 }}
 							spacing={1}
-							mt={4}
 						>
-							<Typography variant='body2' color='text.primary'>
+							<Typography variant='body2' sx={{ color: 'text.primary' }}>
 								Highest offer
 							</Typography>
-							<Stack direction='row' alignItems='center'>
+							<Stack direction='row' sx={{ alignItems: 'center' }}>
 								<LazyLoadImage
 									alt={highestBid.currency}
 									src={
 										highestBid.currency === 'LUNA'
-											? '/images/terra-luna-large.png'
+											? '/images/luna.svg'
 											: '/images/ust-large.png'
 									}
 									width={isMobile ? '18px' : '24px'}
@@ -133,15 +130,12 @@ const Price: React.FC<PriceProps> = ({
 								/>
 								<Typography
 									variant='h200'
-									color='text.primary'
+									sx={{ color: 'text.primary', display: 'inline-block', ml: 1, mr: 1 / 2 }}
 									component='h6'
-									display='inline-block'
-									ml={1}
-									mr={1 / 2}
 								>
 									{formatDecimal(highestBid.amount || 0)}
 								</Typography>
-								<Typography variant='body2' color='text.secondary'>
+								<Typography variant='body2' sx={{ color: 'text.secondary' }}>
 									${highestBid.currency}
 								</Typography>
 							</Stack>
@@ -149,7 +143,7 @@ const Price: React.FC<PriceProps> = ({
 					)}
 				</>
 			) : (
-				<Typography variant='h400' component='h6' color='text.primary' mt={1}>
+				<Typography variant='h400' component='h6' sx={{ color: 'text.primary', mt: 1 }}>
 					Not for sale
 				</Typography>
 			)}

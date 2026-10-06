@@ -27,9 +27,7 @@ const CancelSellingCompleted: React.FC<CancelSellingCompletedProps> = ({
       </StyledImageWrapper>
       <Typography
         variant="body4"
-        color="text.primary"
-        mt={2}
-        textAlign="center"
+        sx={{ color: 'text.primary', mt: 2, textAlign: 'center' }}
         component="p"
       >
         {tokenDetails?.name}

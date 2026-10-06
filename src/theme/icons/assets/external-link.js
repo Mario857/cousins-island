@@ -32,5 +32,4 @@ function SvgExternalLink(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgExternalLink);
-export default __webpack_public_path__ + "static/media/external-link.e4de3484.svg";
 export { ForwardRef as ReactComponent };

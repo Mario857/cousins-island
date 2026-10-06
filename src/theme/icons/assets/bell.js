@@ -32,5 +32,4 @@ function SvgBell(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgBell);
-export default __webpack_public_path__ + "static/media/bell.6e699c21.svg";
 export { ForwardRef as ReactComponent };

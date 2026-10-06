@@ -39,14 +39,14 @@ const CollectionDetails: React.FC<AboutCollectionProps> = ({
   ];
 
   return (
-    <Box p={3}>
-      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 2 }}>
+    <Box sx={{ p: 3 }}>
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: 2 }}>
         <CollectionLogo src={imageURL} alt="Collection Logo" size="small" />
         <div>
-          <Stack direction="row" alignItems="center" spacing={1}>
+          <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1}>
             <TypographyLink
               variant="h300"
-              color="text.primary"
+              sx={{ color: 'text.primary' }}
               underline="hover"
               to={`${ROUTES.COLLECTIONS}/${nftContractAddress}${
                 previousQuery || ''
@@ -60,9 +60,8 @@ const CollectionDetails: React.FC<AboutCollectionProps> = ({
           </Stack>
           <Typography
             variant="body2"
-            color="text.primary"
+            sx={{ color: 'text.primary', mt: 1 / 2 }}
             component="p"
-            mt={1 / 2}
           >
             {formatDecimal(totalTokensCount, 0)} items
           </Typography>
@@ -71,7 +70,7 @@ const CollectionDetails: React.FC<AboutCollectionProps> = ({
       <StyledDescription>
         <div dangerouslySetInnerHTML={{ __html: description }} />
       </StyledDescription>
-      <Stack direction="row" justifyContent="flex-end" spacing={2} mt={2}>
+      <Stack direction="row" sx={{ justifyContent: 'flex-end', mt: 2 }} spacing={2}>
         {socialLinks.map(
           (link, index) =>
             link.href &&

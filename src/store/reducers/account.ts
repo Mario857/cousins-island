@@ -32,7 +32,7 @@ const accountReducer = (state = initialState, action: AccountAction) => {
         depositedBalance: action.payload,
         accountLoaders: {
           ...state.accountLoaders,
-          getDopositedBalance: false,
+          getDepositedBalance: false,
         },
       };
     case AccountActionTypes.REMOVE_BID:

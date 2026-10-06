@@ -32,5 +32,4 @@ function SvgMegaphone(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgMegaphone);
-export default __webpack_public_path__ + "static/media/megaphone.c65cdcbb.svg";
 export { ForwardRef as ReactComponent };

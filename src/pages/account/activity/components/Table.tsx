@@ -7,23 +7,22 @@ import TableBody from '@mui/material/TableBody';
 import Stack from '@mui/material/Stack';
 import TextButton from 'components/Button/TextButton';
 import { ArrowRightIcon } from 'theme/icons';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface TableProps {
   heading: string;
   to?: string;
+  children?: React.ReactNode;
 }
 
 const Table: React.FC<TableProps> = ({ heading, to, children }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
-    <Box mb={6}>
+    <Box sx={{ mb: 6 }}>
       <Stack
         direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={{ xs: 2, md: 1 }}
+        sx={{ alignItems: 'center', justifyContent: 'space-between', mb: { xs: 2, md: 1 } }}
       >
         <Heading variant="h600" component="h4">
           {heading}
@@ -32,7 +31,7 @@ const Table: React.FC<TableProps> = ({ heading, to, children }) => {
           <TextButton
             color="primary"
             endIcon={<ArrowRightIcon />}
-            onClick={() => history.push(to)}
+            onClick={() => navigate(to)}
           >
             View all
           </TextButton>

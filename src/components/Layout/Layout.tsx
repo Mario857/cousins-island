@@ -24,6 +24,7 @@ interface LayoutProps {
 	}[]
 	container?: 'primary' | 'secondary'
 	loading?: boolean
+	children?: React.ReactNode
 }
 
 const Layout: React.FC<LayoutProps> = ({

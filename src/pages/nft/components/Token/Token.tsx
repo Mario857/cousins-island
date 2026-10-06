@@ -15,7 +15,7 @@ const Token: React.FC<TokenProps> = ({ previousQuery, isVideo = false }) => {
     <Card sx={{ p: 0, mb: { xs: 4, md: 0 } }}>
       <Header />
       <Image isVideo={isVideo} />
-      <Box display={{ xs: 'none', md: 'block' }}>
+      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
         <CollectionDetails previousQuery={previousQuery} />
       </Box>
     </Card>

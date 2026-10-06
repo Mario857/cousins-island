@@ -4,10 +4,12 @@ import * as ROUTES from 'constants/routes'
 import Header from '../Header/Header'
 import Tabs from 'components/Tabs/Tabs'
 import Tab from 'components/Tabs/Tab'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
-const AccountLayout: React.FC = ({ children }) => {
-	const history = useHistory()
+const AccountLayout: React.FC<{ children?: React.ReactNode }> = ({
+	children,
+}) => {
+	const navigate = useNavigate()
 	const location = useLocation()
 
 	const breadcrumbs = [
@@ -49,7 +51,7 @@ const AccountLayout: React.FC = ({ children }) => {
 	]
 
 	const handleChange = (event: React.SyntheticEvent, value: string) => {
-		history.push(value)
+		navigate(value)
 	}
 
 	return (
@@ -61,10 +63,12 @@ const AccountLayout: React.FC = ({ children }) => {
 				indicatorColor='secondary'
 				textColor='inherit'
 				variant='fullWidth'
-				TabIndicatorProps={{
-					style: {
-						background: 'white',
-						height: 1,
+				slotProps={{
+					indicator: {
+						style: {
+							background: 'white',
+							height: 1,
+						},
 					},
 				}}
 				sx={{ mb: 4 }}

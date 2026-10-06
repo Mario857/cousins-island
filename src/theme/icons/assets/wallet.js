@@ -87,5 +87,4 @@ function SvgWallet(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/ React.forwardRef(SvgWallet)
-export default __webpack_public_path__ + 'static/media/wallet.b3f2a87f.svg'
 export { ForwardRef as ReactComponent }

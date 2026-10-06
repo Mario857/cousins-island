@@ -32,5 +32,4 @@ function SvgOutlineHeart(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgOutlineHeart);
-export default __webpack_public_path__ + "static/media/outline-heart.1f3bc2ae.svg";
 export { ForwardRef as ReactComponent };

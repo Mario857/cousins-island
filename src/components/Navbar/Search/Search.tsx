@@ -87,9 +87,7 @@ const Search = () => {
         }}
       >
         <Box
-          position="relative"
-          width="100%"
-          maxWidth={isMediumScreen && !isMobile ? 165 : '100%'}
+          sx={{ position: 'relative', width: '100%', maxWidth: isMediumScreen && !isMobile ? 165 : '100%' }}
         >
           <Input
             placeholder="Search collection"
@@ -123,7 +121,7 @@ const Search = () => {
                   />
                 ))
               ) : (
-                <Typography variant="body2" color="text.primary">
+                <Typography variant="body2" sx={{ color: 'text.primary' }}>
                   No results
                 </Typography>
               )}

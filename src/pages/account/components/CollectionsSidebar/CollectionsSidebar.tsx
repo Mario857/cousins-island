@@ -59,10 +59,9 @@ const CollectionsSidebar: React.FC<CollectionsSidebarProps> = ({
                     >
                       <Stack
                         direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
+                        sx={{ alignItems: 'center', justifyContent: 'space-between' }}
                       >
-                        <Typography variant="body2" color="text.primary">
+                        <Typography variant="body2" sx={{ color: 'text.primary' }}>
                           {collection.title} ({formattedCount})
                         </Typography>
                         <Radio
@@ -79,7 +78,7 @@ const CollectionsSidebar: React.FC<CollectionsSidebarProps> = ({
               })
             ) : (
               <AccordionOption>
-                <Typography variant="body2" color="text.primary">
+                <Typography variant="body2" sx={{ color: 'text.primary' }}>
                   No items found
                 </Typography>
               </AccordionOption>

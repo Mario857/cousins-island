@@ -43,16 +43,14 @@ const SignUpForm = () => {
       <Stack
         direction="row"
         spacing={2}
-        mt={2}
         onClick={() => setTosChecked(!tosChecked)}
-        sx={{ cursor: 'pointer' }}
+        sx={{ mt: 2, cursor: 'pointer' }}
       >
         <Checkbox checked={tosChecked} sx={{ mt: '3px' }} />
         <Typography
           variant="body2"
-          color="text.primary"
           component="p"
-          sx={{ lineHeight: '26px !important' }}
+          sx={{ color: 'text.primary', lineHeight: '26px !important' }}
         >
           I agree to the processing of personal data by Cousin Island for marketing
           purposes and accept{' '}
@@ -62,12 +60,12 @@ const SignUpForm = () => {
         </Typography>
       </Stack>
       {(errors.email || errors.api || errors.tosChecked) && (
-        <Typography variant="body2" color="error.light" mt={2}>
+        <Typography variant="body2" sx={{ color: 'error.light', mt: 2 }}>
           {errors.email || errors.api || errors.tosChecked}
         </Typography>
       )}
       {success && (
-        <Typography variant="body2" color="primary" mt={2}>
+        <Typography variant="body2" color="primary" sx={{ mt: 2 }}>
           {success}
         </Typography>
       )}

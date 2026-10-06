@@ -32,5 +32,4 @@ function SvgTwitter(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgTwitter);
-export default __webpack_public_path__ + "static/media/twitter.688143ec.svg";
 export { ForwardRef as ReactComponent };

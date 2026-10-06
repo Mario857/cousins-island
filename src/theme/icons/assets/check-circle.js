@@ -32,5 +32,4 @@ function SvgCheckCircle(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgCheckCircle);
-export default __webpack_public_path__ + "static/media/check-circle.72987f75.svg";
 export { ForwardRef as ReactComponent };

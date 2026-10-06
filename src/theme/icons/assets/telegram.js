@@ -32,5 +32,4 @@ function SvgTelegram(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgTelegram);
-export default __webpack_public_path__ + "static/media/telegram.da90280c.svg";
 export { ForwardRef as ReactComponent };

@@ -18,7 +18,7 @@ import {
 } from 'store/actions/token'
 import { getBalance } from 'store/actions/account'
 import ExclusiveMark from 'components/ExclusiveMark/ExclusiveMark'
-import blockchain from 'utils/blockchain/real/luart-api'
+import blockchain from 'utils/blockchain/blockchain'
 import Alert from 'components/Alert/Alert'
 import { getLunaPrice } from 'store/actions/statistics'
 
@@ -252,7 +252,7 @@ const AcceptOfferModal: React.FC<AcceptOfferModalProps> = ({
 					/>
 				)}
 				{!soldSuccessfully ? (
-					<Stack direction='row' alignItems='center' spacing={2} mt={3}>
+					<Stack direction='row' sx={{ alignItems: 'center', mt: 3 }} spacing={2}>
 						<Button
 							variant='contained'
 							color='tertiary'

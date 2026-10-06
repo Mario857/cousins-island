@@ -3,43 +3,36 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 import Router from './Router'
 import theme from 'theme/theme'
 import GlobalStyles from './Global.styled'
-// import { State } from 'store/store';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getCollections } from 'store/actions/collections';
-// import { useEffect } from 'react';
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/swiper.min.css'
-import {
-	useWallet,
-	//  WalletStatus
-} from '@terra-money/wallet-provider'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useWallet, WalletStatus } from 'wallet'
+import { getCollections } from 'store/actions/collections'
+import { getNotifications } from 'store/actions/notifications'
 import blockchain from 'utils/blockchain/blockchain'
-// import { getNotifications } from 'store/actions/notifications';
 import WalletRefetchStates from 'hooks/use-wallet-refetch-states'
 
 const App = () => {
-	// const { collections } = useSelector((state: State) => state.collections);
-	// const { notifications, notificationsLoaders } = useSelector(
-	//   (state: State) => state.notifications
-	// );
-
-	// const dispatch = useDispatch();
-
 	const wallet = useWallet()
 
-	blockchain.setWallet(wallet)
+	// The blockchain layer signs transactions with the connected wallet.
+	blockchain.setWallet(wallet.session)
 
-	// useEffect(() => {
-	//   if (!collections) dispatch(getCollections());
+	const dispatch = useDispatch()
 
-	//   if (
-	//     !notifications &&
-	//     notificationsLoaders?.getNotifications &&
-	//     wallet.status === WalletStatus.WALLET_CONNECTED
-	//   ) {
-	//     dispatch(getNotifications());
-	//   }
-	// }, [dispatch, wallet, collections]);
+	// Collections feed the home, collections, activity and account pages.
+	useEffect(() => {
+		dispatch(getCollections() as any)
+	}, [dispatch])
+
+	const connectedAddress =
+		wallet.status === WalletStatus.WALLET_CONNECTED ? wallet.session?.address : undefined
+
+	useEffect(() => {
+		if (connectedAddress) dispatch(getNotifications() as any)
+	}, [dispatch, connectedAddress])
 
 	return (
 		<StyledEngineProvider injectFirst>

@@ -8,7 +8,7 @@ import * as ROUTES from 'constants/routes';
 import TypographyLink from 'components/TypographyLink/TypographyLink';
 import ExclusiveMark from 'components/ExclusiveMark/ExclusiveMark';
 import styled from 'styled-components';
-import useCopyClipboard from 'react-use-clipboard';
+import useCopyClipboard from 'hooks/useClipboard';
 import { useState } from 'react';
 import { CopyFileIcon } from 'theme/icons';
 import Tooltip from '@mui/material/Tooltip';
@@ -71,14 +71,12 @@ const Header: React.FC<HeaderProps> = ({ previousQuery }) => {
     <CardHeader>
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
-        alignItems={{ sm: 'center' }}
-        justifyContent={{ sm: 'space-between' }}
-        sx={{ mb: 1 }}
+        sx={{ alignItems: { sm: 'center' }, justifyContent: { sm: 'space-between' }, mb: 1 }}
       >
-        <Stack direction="row" alignItems="center" spacing={1}>
+        <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1}>
           <TypographyLink
             variant="body4"
-            color="text.secondary"
+            sx={{ color: 'text.secondary' }}
             to={`${ROUTES.COLLECTIONS}/${nftContractAddress}${
               previousQuery || ''
             }`}
@@ -93,16 +91,15 @@ const Header: React.FC<HeaderProps> = ({ previousQuery }) => {
       <Heading
         variant="h700"
         component="h3"
-        mb={1}
-        sx={{ wordWrap: 'break-word' }}
+        sx={{ mb: 1, wordWrap: 'break-word' }}
       >
         {tokenName}
       </Heading>
-      <Stack spacing={1} direction="row" alignItems="center">
-        <Typography variant="body2" color="text.secondary">
+      <Stack spacing={1} direction="row" sx={{ alignItems: 'center' }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Owner
         </Typography>
-        <Typography variant="body2" color="text.primary" noWrap>
+        <Typography variant="body2" sx={{ color: 'text.primary' }} noWrap>
           {ownerAddress}
         </Typography>
         <Tooltip title="Text copied!" open={showCopyTooltip} arrow>

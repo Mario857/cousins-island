@@ -64,14 +64,14 @@ export const StyledAccordion = styled(Accordion)`
 `;
 
 interface StyledAccordionDetailsProps extends AccordionDetailsProps {
-  scrollbar: 'show' | 'hide';
+  $scrollbar: 'show' | 'hide';
 }
 
 export const StyledAccordionDetails = styled(
   AccordionDetails
 )<StyledAccordionDetailsProps>`
   ${(props) =>
-    props.scrollbar === 'show' &&
+    props.$scrollbar === 'show' &&
     css`
       overflow-y: auto;
       border-top: 1px solid ${palette.alphaLight[200]};

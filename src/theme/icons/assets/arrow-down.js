@@ -33,5 +33,4 @@ function SvgArrowDown(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgArrowDown);
-export default __webpack_public_path__ + "static/media/arrow-down.95ef19d8.svg";
 export { ForwardRef as ReactComponent };

@@ -2,7 +2,7 @@ import { ArrowSortIcon } from 'theme/icons';
 import Dropdown from 'components/Dropdown/Dropdown';
 import { TokensSortOptions } from 'pages/collection';
 import { TokensQuery } from 'utils/blockchain/blockchain.interface';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface SortingProps {
   sortOptions: TokensSortOptions;
@@ -17,7 +17,7 @@ const Sorting: React.FC<SortingProps> = ({
   setQuery,
   getQueryToURL,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const dropdownOptions = sortOptions.map((option) => ({
@@ -26,10 +26,13 @@ const Sorting: React.FC<SortingProps> = ({
       const updatedQuery = { ...query, page: 1, sort: option.value };
       const queryToURL = getQueryToURL(updatedQuery);
       setQuery(updatedQuery);
-      history.replace({
-        pathname: location.pathname,
-        search: queryToURL,
-      });
+      navigate(
+        {
+          pathname: location.pathname,
+          search: queryToURL,
+        },
+        { replace: true }
+      );
     },
   }));
 

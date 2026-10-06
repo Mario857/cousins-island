@@ -13,9 +13,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ arrow, children, ...rest }) => {
     <StyledMenuItem {...rest}>
       <Stack
         direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{ width: '100% !important' }}
+        sx={{ alignItems: 'center', justifyContent: 'space-between', width: '100% !important' }}
         spacing={3}
       >
         <ListItemText primary={children} />

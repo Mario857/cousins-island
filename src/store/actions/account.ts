@@ -3,6 +3,10 @@ import { Dispatch } from 'redux'
 import { AccountAction, AccountActionTypes } from '../types/account.types'
 import { NFTTokenDetails } from 'utils/blockchain/blockchain.interface'
 
+/**
+ * @deprecated There is no marketplace balance any more (bids are escrowed when
+ * placed); this always stores { LUNA: 0, UST: 0 }.
+ */
 export const getDepositedBalance =
 	() => async (dispatch: Dispatch<AccountAction>) => {
 		const loadingName = 'getDepositedBalance'
@@ -96,13 +100,11 @@ export const getOwnedTokensCount =
 		})
 
 		try {
-			const promises = []
+			const counts: { [key: string]: number } = {}
 
-			let counts: { [key: string]: number } = {}
-
-			for (let i = 0; i < nftContractAddresses.length; i++) {
-				const nftContractAddress = nftContractAddresses[i]
-				promises.push(
+			// One unreachable collection shouldn't hide the others.
+			await Promise.allSettled(
+				nftContractAddresses.map(nftContractAddress =>
 					blockchain
 						.getTokensOwnedByUserCountInCollection(nftContractAddress)
 						.then((count: number) => {
@@ -111,9 +113,7 @@ export const getOwnedTokensCount =
 							}
 						})
 				)
-			}
-
-			await Promise.all(promises)
+			)
 
 			dispatch({
 				type: AccountActionTypes.GET_OWNED_TOKENS_COUNT,
@@ -168,32 +168,14 @@ export const updateOnSaleTokens = (updatedOnSaleTokens: NFTTokenDetails[]) => {
 	}
 }
 
+/** Wallet balance. Only LUNA exists on Terra 2; `ust` and `luart` stay 0 for old UI code. */
 export const getBalance = () => async (dispatch: Dispatch<AccountAction>) => {
 	try {
-		const promises = []
-		const balance = {
-			ust: 0,
-			luna: 0,
-			luart: 0,
-		}
-
-		promises.push(
-			blockchain.getBalanceUST().then((ust: any) => (balance.ust = ust))
-		)
-
-		promises.push(
-			blockchain.getBalanceLUNA().then((luna: any) => (balance.luna = luna))
-		)
-
-		promises.push(
-			blockchain.getBalanceLUART().then((luart: any) => (balance.luart = luart))
-		)
-
-		await Promise.all(promises)
+		const luna = await blockchain.getBalanceLUNA()
 
 		dispatch({
 			type: AccountActionTypes.GET_BALANCE,
-			payload: balance,
+			payload: { ust: 0, luna, luart: 0 },
 		})
 	} catch (error) {
 		console.log(error)

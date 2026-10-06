@@ -16,22 +16,20 @@ const NewestCollections = () => {
   );
 
   return (
-    <Box mt={{ xs: 10, md: 16 }}>
+    <Box sx={{ mt: { xs: 10, md: 16 } }}>
       <Stack
         direction={{ xs: 'column', md: 'row' }}
-        justifyContent={{ xs: 'flex-start', md: 'space-between' }}
-        alignItems={{ xs: 'flex-start', md: 'center' }}
-        mb={{ xs: 3, md: 6 }}
+        sx={{ justifyContent: { xs: 'flex-start', md: 'space-between' }, alignItems: { xs: 'flex-start', md: 'center' }, mb: { xs: 3, md: 6 } }}
       >
         <Heading
           variant="h600"
           component="h2"
-          color="text.primary"
           sx={{
+            color: 'text.primary',
+            mb: { xs: 1, md: 0 },
             fontSize: { md: '56px !important' },
             lineHeight: { md: '84px !important' },
           }}
-          mb={{ xs: 1, md: 0 }}
         >
           <AppleIcon size="large" icon="glowing-star" alt="Glowing Star" />{' '}
           Newest Arrivals

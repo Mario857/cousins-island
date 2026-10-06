@@ -28,7 +28,7 @@ interface CurrencyInputProps extends InputProps {
 }
 
 const CurrencyInput: React.FC<CurrencyInputProps> = ({
-  currency = 'UST',
+  currency = 'LUNA',
   available,
   onAvailableClick,
   onHalfPriceClick,
@@ -104,16 +104,14 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
         <Typography
           variant="h300"
           component="label"
-          color="text.primary"
-          mb={1}
-          display="block"
+          sx={{ color: 'text.primary', mb: 1, display: 'block' }}
         >
           {label}
         </Typography>
       )}
       <StyledCurrencyInputWrapper readOnly={readOnly}>
         <StyledCurrency>
-          <Typography variant="body3" color="text.secondary">
+          <Typography variant="body3" sx={{ color: 'text.secondary' }}>
             ${currency}
           </Typography>
         </StyledCurrency>
@@ -127,13 +125,11 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
         }}
       >
         <Grid
-          item
-          xs={12}
-          md={!available && available !== 0 ? 12 : 7}
+          size={{ xs: 12, md: !available && available !== 0 ? 12 : 7 }}
           sx={{ textAlign: { xs: 'right', sm: 'left' } }}
         >
           {error && (
-            <Typography variant="body2" color="error.light" marginBottom={1}>
+            <Typography variant="body2" sx={{ color: 'error.light', marginBottom: 1 }}>
               {error || ''}
             </Typography>
           )}
@@ -149,7 +145,7 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
             </StyledAvailableButton>
           )}
         </Grid>
-        <Grid item xs={12} md={5} sx={{ textAlign: 'right' }}>
+        <Grid size={{ xs: 12, md: 5 }} sx={{ textAlign: 'right' }}>
           {(available || available === 0) && onAvailableClick && (
             <StyledAvailableButton type="button" onClick={onAvailableClick}>
               {currency === 'LUNA'

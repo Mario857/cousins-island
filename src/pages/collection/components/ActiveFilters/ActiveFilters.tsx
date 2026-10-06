@@ -56,24 +56,20 @@ const ActiveFilters: React.FC<ActiveFiltersProps> = ({
 	const activeFilters = getActiveFilters()
 
 	return activeFilters && activeFilters.length > 0 ? (
-		<Box mb={{ md: 2 }} mt={{ xs: 4, md: 0 }}>
+		<Box sx={{ mb: { md: 2 }, mt: { xs: 4, md: 0 } }}>
 			<Stack
 				direction={{ xs: 'column', md: 'row' }}
-				alignItems={{ md: 'center' }}
-				sx={{ flexFlow: 'wrap' }}
+				sx={{ alignItems: { md: 'center' }, flexFlow: 'wrap' }}
 			>
 				<Stack
 					direction='row'
-					alignItems='center'
 					spacing={2}
-					sx={{ mb: { xs: 2, md: 0 } }}
+					sx={{ alignItems: 'center', mb: { xs: 2, md: 0 } }}
 				>
 					<Typography
 						variant='h200'
-						color='text.primary'
+						sx={{ color: 'text.primary', mr: { md: 2 }, mb: { md: 2 } }}
 						component='h6'
-						mr={{ md: 2 }}
-						mb={{ md: 2 }}
 					>
 						Total results: {totalResults || 0}
 					</Typography>

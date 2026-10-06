@@ -32,5 +32,4 @@ function SvgLoginAlt(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgLoginAlt);
-export default __webpack_public_path__ + "static/media/login-alt.3b38a504.svg";
 export { ForwardRef as ReactComponent };

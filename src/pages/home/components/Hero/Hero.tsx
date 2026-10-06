@@ -53,14 +53,14 @@ const Hero = () => {
           variant="h900"
           component="h1"
           sx={{
+            mb: { xs: 3, md: 1 },
             fontSize: { md: '89px !important' },
             lineHeight: { md: '133px !important' },
           }}
-          mb={{ xs: 3, md: 1 }}
         >
           Discover NFTs today
         </Heading>
-        <StyledDescription variant="h600" component="h3" mb={6}>
+        <StyledDescription variant="h600" component="h3" sx={{ mb: 6 }}>
           Buy, Sell, Bid for NFTs on our marketplace and be rewarded with COUSIN
           Power
         </StyledDescription>

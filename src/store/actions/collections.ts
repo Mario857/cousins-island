@@ -6,6 +6,7 @@ import {
 import React from 'react'
 import { Dispatch } from 'redux'
 import {
+	Collection,
 	CollectionsAction,
 	CollectionsActionTypes,
 } from '../types/collections.types'
@@ -20,12 +21,14 @@ export const getCollections =
 		})
 
 		try {
-			const collections = await blockchain.getNFTCollections()
-			const volumes = await blockchain.getCollectionsVolumes()
+			const [collections, volumes] = await Promise.all([
+				blockchain.getNFTCollections(),
+				blockchain.getCollectionsVolumes(),
+			])
 
-			const collectionsWithVolume = collections.map((collection: any) => ({
+			const collectionsWithVolume = collections.map(collection => ({
 				...collection,
-				volume: volumes[collection.nftContractAddress],
+				volume: volumes[collection.nftContractAddress] ?? collection.volume,
 			}))
 
 			const newestCollections = getNewestCollections(collectionsWithVolume)
@@ -65,36 +68,25 @@ export const getCollection =
 	) =>
 	async (dispatch: Dispatch<CollectionsAction>) => {
 		try {
-			const promises = []
+			const [details, tokens] = await Promise.all([
+				queryChanged ? undefined : blockchain.getNFTCollection(query.nftContractAddress),
+				blockchain.getTokensInCollection(query),
+			])
 
-			let data: any = {}
-
-			if (!queryChanged) {
-				promises.push(
-					await blockchain
-						.getNFTCollection(query.nftContractAddress)
-						.then((details: any) => (data.details = details))
-				)
+			const data: Partial<Collection> = {
+				tokens: {
+					pagesCount: tokens.pagesCount,
+					data: tokens.tokens,
+					totalResults: tokens.totalResults,
+				},
 			}
-
-			promises.push(
-				await blockchain.getTokensInCollection(query).then(
-					(tokens: any) =>
-						(data.tokens = {
-							pagesCount: tokens.pagesCount,
-							data: tokens.tokens,
-							totalResults: tokens.totalResults,
-						})
-				)
-			)
-
-			await Promise.all(promises)
+			if (details) data.details = details
 
 			setLoading(prevLoading => ({ ...prevLoading, [loadingName]: false }))
 
 			dispatch({
 				type: CollectionsActionTypes.GET_COLLECTION,
-				payload: data,
+				payload: data as Collection,
 			})
 		} catch (error) {
 			console.log(error)
@@ -106,7 +98,7 @@ const getNewestCollections = (
 	collections: NFTCollectionDetails[],
 	maxCount = 999
 ) => {
-	const sortedCollectionsByListingTime = collections.sort(
+	const sortedCollectionsByListingTime = [...collections].sort(
 		(a, b) => b.marketplaceListingStart - a.marketplaceListingStart
 	)
 
@@ -123,7 +115,7 @@ const getTrendingCollections = (
 	collections: NFTCollectionDetails[],
 	maxCount = 999
 ) => {
-	return collections
+	return [...collections]
 		.sort((a, b) => (b.volume?.uluna || 0) - (a.volume?.uluna || 0))
 		.slice(0, maxCount)
 }
@@ -131,7 +123,7 @@ const getTrendingCollections = (
 const getCollectionsSortedAlphabetically = (
 	collections: NFTCollectionDetails[]
 ) => {
-	const collectionsSortedAlphabetically = collections.sort((a, b) => {
+	const collectionsSortedAlphabetically = [...collections].sort((a, b) => {
 		if (a.title < b.title) return -1
 		if (a.title > b.title) return 1
 		return 0

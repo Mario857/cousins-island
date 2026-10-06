@@ -32,5 +32,4 @@ function SvgFlame(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgFlame);
-export default __webpack_public_path__ + "static/media/flame.9c2209d4.svg";
 export { ForwardRef as ReactComponent };

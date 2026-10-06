@@ -60,12 +60,7 @@ const FiltersMobile: React.FC<FiltersComponentProps> = ({
     <>
       {!loading && (
         <Box
-          position="fixed"
-          bottom={32}
-          left={0}
-          width="100%"
-          px={2}
-          sx={{ zIndex: '1000 !important' }}
+          sx={{ position: 'fixed', bottom: 32, left: 0, width: '100%', px: 2, zIndex: '1000 !important' }}
         >
           <Button
             variant="contained"
@@ -89,9 +84,7 @@ const FiltersMobile: React.FC<FiltersComponentProps> = ({
         <StyledContent>
           <Stack
             direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            mb={3}
+            sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 3 }}
           >
             <FiltersHeader
               showResetButton={showResetButton}

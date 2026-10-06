@@ -3,29 +3,22 @@ import Button from 'components/Button/Button'
 import Modal from 'components/Modal/Modal'
 import { UserTradeStatus } from '../Trade'
 import OfferForm from './OfferForm'
-import {
-	TerraCurrency,
-	TxReceipt,
-	Balance,
-} from 'utils/blockchain/blockchain.interface'
+import { TerraCurrency, TxReceipt } from 'utils/blockchain/blockchain.interface'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from 'store/store'
 import blockchainModule from 'utils/blockchain/blockchain'
 import useBroadcastingTx from 'hooks/useBroadcastingTx'
 import SuccessfullTokenModalAction from 'components/SuccessfullTokenModalAction/SuccessfullTokenModalAction'
-import { formatLUNADecimal, formatUSTDecimal } from 'utils/currency'
+import { formatLUNADecimal } from 'utils/currency'
 import { getAllBidsForToken } from 'store/actions/token'
-import { useWallet } from '@terra-money/wallet-provider'
-import {
-	getAllBidsForUser,
-	getBalance,
-	getDepositedBalance,
-} from 'store/actions/account'
+import { useWallet } from 'wallet'
+import { getAllBidsForUser, getBalance } from 'store/actions/account'
 import TokenDetails from './TokenDetails'
-import DepositFundsForm from './DepositFundsForm'
 
 interface PlaceBidProps {
 	userTradeStatus: UserTradeStatus
+	/** Bids can also be placed on NFTs that aren't listed. */
+	canUserBid?: boolean
 	sellPrice: number
 	sellCurrency: string
 }
@@ -33,11 +26,11 @@ interface PlaceBidProps {
 export enum View {
 	POST_BID,
 	BID_POSTED,
-	DEPOSIT_FUNDS,
 }
 
 const PlaceBid: React.FC<PlaceBidProps> = ({
 	userTradeStatus,
+	canUserBid,
 	sellPrice,
 	sellCurrency,
 }) => {
@@ -49,7 +42,9 @@ const PlaceBid: React.FC<PlaceBidProps> = ({
 	const [errorMessage, setErrorMessage] = useState('')
 
 	const { tokenDetails } = useSelector((state: State) => state.token)
-	const { depositedBalance } = useSelector((state: State) => state.account)
+	// Bids are paid from the wallet when placed (the contract holds them in escrow).
+	const { balance } = useSelector((state: State) => state.account)
+	const walletBalance = { LUNA: balance?.luna ?? 0, UST: 0 }
 
 	const { tokenId, name: tokenName, nftContractAddress } = tokenDetails!
 
@@ -63,12 +58,8 @@ const PlaceBid: React.FC<PlaceBidProps> = ({
 		if (view === View.POST_BID) {
 			dispatch(getAllBidsForToken(nftContractAddress!, tokenId!) as any)
 			dispatch(getAllBidsForUser(userAddress) as any)
-			setView(View.BID_POSTED)
-		}
-
-		if (view === View.DEPOSIT_FUNDS) {
-			dispatch(getDepositedBalance() as any)
 			dispatch(getBalance() as any)
+			setView(View.BID_POSTED)
 		}
 	}
 
@@ -93,7 +84,7 @@ const PlaceBid: React.FC<PlaceBidProps> = ({
 
 			setSuccessMessage(
 				`You have successfully placed your bid for ${
-					currency === 'LUNA' ? formatLUNADecimal(amount) : formatUSTDecimal(amount)
+					formatLUNADecimal(amount)
 				}`
 			)
 			setErrorMessage('')
@@ -106,27 +97,8 @@ const PlaceBid: React.FC<PlaceBidProps> = ({
 		setLoading(loading => ({ ...loading, send: false }))
 	}
 
-	const depositFunds = async (amount: number, currency: TerraCurrency) => {
-		setLoading(loading => ({ ...loading, send: true }))
-		try {
-			const txReceipt = await blockchainModule.depositTokensOnMarketplace(
-				amount,
-				currency
-			)
-			setTxReceipt(txReceipt)
-			setSuccessMessage('You have successfully deposited your funds.')
-			setErrorMessage('')
-		} catch (error) {
-			console.log(error)
-			setSuccessMessage('')
-			setErrorMessage('There was an error while processing the transaction.')
-		}
-
-		setLoading(loading => ({ ...loading, send: false }))
-	}
-
 	useEffect(() => {
-		if (!depositedBalance) dispatch(getDepositedBalance() as any)
+		dispatch(getBalance() as any)
 	}, [dispatch])
 
 	const getViewDetails = () => {
@@ -146,30 +118,11 @@ const PlaceBid: React.FC<PlaceBidProps> = ({
 						/>
 					),
 				}
-			case View.DEPOSIT_FUNDS:
-				return {
-					heading: 'Deposit funds',
-					description: 'Deposit funds to make an offer.',
-					children: (
-						<DepositFundsForm
-							loading={loading}
-							loadingText={loadingText}
-							errorMessage={errorMessage}
-							setErrorMessage={setErrorMessage}
-							setView={setView}
-							depositFunds={depositFunds}
-							txReceipt={txReceipt}
-							setTxReceipt={setTxReceipt}
-							successMessage={successMessage}
-							setSuccessMessage={setSuccessMessage}
-						/>
-					),
-				}
 			case View.POST_BID:
 			default:
 				return {
 					heading: 'Make offer',
-					description: `You are about to place a bid for ${tokenName}. Make sure you have the selected currency deposited in the Marketplace.`,
+					description: `You are about to place a bid for ${tokenName}. The amount is held by the marketplace until the owner accepts your bid or you cancel it.`,
 					header: <TokenDetails />,
 					children: (
 						<OfferForm
@@ -178,7 +131,7 @@ const PlaceBid: React.FC<PlaceBidProps> = ({
 							loadingText={loadingText}
 							errorMessage={errorMessage}
 							setErrorMessage={setErrorMessage}
-							balance={depositedBalance}
+							balance={walletBalance}
 							setOpenModal={setOpenModal}
 							setView={setView}
 							sellPrice={sellPrice}
@@ -193,7 +146,8 @@ const PlaceBid: React.FC<PlaceBidProps> = ({
 
 	return (
 		<>
-			{userTradeStatus === UserTradeStatus.CAN_BUY && (
+			{(userTradeStatus === UserTradeStatus.CAN_BUY ||
+				(userTradeStatus === UserTradeStatus.NO_OFFERS && canUserBid)) && (
 				<Button
 					variant='contained'
 					color='tertiary'

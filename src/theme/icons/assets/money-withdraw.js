@@ -32,5 +32,4 @@ function SvgMoneyWithdraw(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgMoneyWithdraw);
-export default __webpack_public_path__ + "static/media/money-withdraw.024394c8.svg";
 export { ForwardRef as ReactComponent };

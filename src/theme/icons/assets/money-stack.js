@@ -32,5 +32,4 @@ function SvgMoneyStack(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgMoneyStack);
-export default __webpack_public_path__ + "static/media/money-stack.50caa360.svg";
 export { ForwardRef as ReactComponent };

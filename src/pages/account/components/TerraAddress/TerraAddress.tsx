@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { CopyFileIcon, WalletIcon } from 'theme/icons';
-import useClipboard from 'react-use-clipboard';
+import useClipboard from 'hooks/useClipboard';
 import Tooltip from '@mui/material/Tooltip';
-import { useWallet } from '@terra-money/wallet-provider';
+import { useWallet } from 'wallet';
 import { StyledTerraAddress, StyledButton } from './TerraAddress.styled';
 
 const TerraAddress = () => {

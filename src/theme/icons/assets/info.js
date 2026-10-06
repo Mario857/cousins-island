@@ -32,5 +32,4 @@ function SvgInfo(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgInfo);
-export default __webpack_public_path__ + "static/media/info.c7faadc2.svg";
 export { ForwardRef as ReactComponent };

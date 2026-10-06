@@ -45,9 +45,7 @@ const Tokens: React.FC<TokensProps> = ({
         <Grid container spacing={4}>
           {tokens.map((token) => (
             <Grid
-              item
-              xs={12}
-              md={tokensPerRow}
+              size={{ xs: 12, md: tokensPerRow }}
               key={token?.name || `#${token?.tokenId}`}
             >
               <NFTCard
@@ -66,7 +64,7 @@ const Tokens: React.FC<TokensProps> = ({
             </Grid>
           ))}
         </Grid>
-        <Box mt={6} textAlign="center" sx={{ minHeight: 48 }}>
+        <Box sx={{ mt: 6, textAlign: 'center', minHeight: 48 }}>
           {canLoadMore ? (
             <Button
               variant="contained"
@@ -80,7 +78,7 @@ const Tokens: React.FC<TokensProps> = ({
               Load more
             </Button>
           ) : (
-            <Typography variant="body3" color="text.primary" component="p">
+            <Typography variant="body3" sx={{ color: 'text.primary' }} component="p">
               {alreadyLoadedMore ? "You've reached the end of the list" : ''}
             </Typography>
           )}

@@ -18,10 +18,10 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 }) => {
   return (
     <StyledLoadingSpinnerContainer center={center}>
-      <Stack direction="row" alignItems="center" spacing={2}>
+      <Stack direction="row" sx={{ alignItems: 'center' }} spacing={2}>
         <StyledLoadingSpinner {...rest} />
         {addText && (
-          <Typography variant="body2" color="text.primary">
+          <Typography variant="body2" sx={{ color: 'text.primary' }}>
             Loading...
           </Typography>
         )}

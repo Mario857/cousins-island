@@ -18,7 +18,7 @@ const Filters: React.FC<FiltersComponentProps> = ({
     selectedType !== 'all' || selectedContractAddress !== 'all';
 
   return (
-    <Box position="sticky" top={32} right={0}>
+    <Box sx={{ position: 'sticky', top: 32, right: 0 }}>
       <StyledTypesWrapper>
         <FiltersHeader
           showResetButton={showResetButton}

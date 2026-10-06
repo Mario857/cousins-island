@@ -1,44 +1,35 @@
-import { useWallet } from '@terra-money/wallet-provider';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
+import { useWallet } from 'wallet'
 
+/**
+ * Re-reads the wallet account on navigation, and reloads the page when the
+ * user switches to another account in the wallet (pages cache per-address data).
+ * Connecting or disconnecting doesn't reload.
+ */
 export const useWalletRefetchStates = () => {
-  const wallet = useWallet();
-  const location = useLocation();
+	const { refetchStates, wallets } = useWallet()
+	const location = useLocation()
+	const address = wallets[0]?.terraAddress ?? null
+	const prevAddress = useRef<string | null>(address)
 
-  const [prevWalletAddress, setPrevWalletAddress] = useState<null | string>(
-    null
-  );
+	useEffect(() => {
+		refetchStates()
+		// Only on navigation; refetchStates changes identity with the account.
+	}, [location.pathname])
 
-  const compareWalletAddresses = () => {
-    const currentWalletAddress = wallet?.wallets?.[0]?.terraAddress;
-
-    if (!prevWalletAddress) return;
-
-    if (currentWalletAddress === prevWalletAddress) return;
-
-    window.location.reload(); // Reload page to get new wallet data
-  };
-
-  useEffect(() => {
-    wallet.refetchStates();
-  }, [location.pathname]);
-
-  useEffect(() => {
-    if (wallet && !prevWalletAddress) {
-      const prevWalletAddress = wallet?.wallets?.[0]?.terraAddress;
-      setPrevWalletAddress(prevWalletAddress);
-    }
-
-    if (prevWalletAddress) {
-      compareWalletAddresses();
-    }
-  }, [wallet]);
-};
+	useEffect(() => {
+		const prev = prevAddress.current
+		prevAddress.current = address
+		if (prev && address && prev !== address) {
+			window.location.reload()
+		}
+	}, [address])
+}
 
 const WalletRefetchStates = () => {
-  useWalletRefetchStates();
-  return null;
-};
+	useWalletRefetchStates()
+	return null
+}
 
-export default WalletRefetchStates;
+export default WalletRefetchStates

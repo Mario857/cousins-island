@@ -32,5 +32,4 @@ function SvgCheck(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgCheck);
-export default __webpack_public_path__ + "static/media/check.4780fdf5.svg";
 export { ForwardRef as ReactComponent };

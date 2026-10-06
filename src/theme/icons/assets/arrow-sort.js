@@ -32,5 +32,4 @@ function SvgArrowSort(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgArrowSort);
-export default __webpack_public_path__ + "static/media/arrow-sort.0e2ceb6f.svg";
 export { ForwardRef as ReactComponent };

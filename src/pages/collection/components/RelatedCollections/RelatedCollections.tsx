@@ -14,7 +14,7 @@ const RelatedCollections: React.FC<RelatedCollectionsProps> = ({
   relatedCollections,
 }) => {
   return (
-    <Stack direction="column" spacing={2} mb={2}>
+    <Stack direction="column" spacing={2} sx={{ mb: 2 }}>
       {relatedCollections.map((relatedCollection) => {
         const relatedCollectionURL = `${ROUTES.COLLECTIONS}/${relatedCollection.nftContractAddress}`;
 

@@ -17,7 +17,6 @@ export const ACCOUNT_LIKED = '/account/liked';
 export const ACCOUNT_ACTIVITY = '/account/activity';
 export const ACCOUNT_BOXES = '/account/boxes';
 export const WITHDRAW = '/withdraw';
-export const LUART_WALLET = '/account/wallet';
 
 //EXTERNAL LINKS
 export const LANDING_PAGE = 'https://cousin-island.io';

@@ -10,7 +10,6 @@ import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner'
 import TxResult from 'components/TxResult/TxResult'
 import React from 'react'
 import Stack from '@mui/material/Stack'
-import Balance from './Balance'
 import { View } from './PlaceBid'
 import { formatLUNADecimal, formatUSTDecimal, toDecimal } from 'utils/currency'
 import { useSelector, useDispatch } from 'react-redux'
@@ -221,7 +220,6 @@ const OfferForm: React.FC<OfferFormProps> = ({
 					setValue('amount', '')
 				}}
 			/>
-			<Balance setView={setView} currency={values.currency} />
 			<CurrencyInput
 				label='Your Bid'
 				value={values.amount}
@@ -281,21 +279,10 @@ const OfferForm: React.FC<OfferFormProps> = ({
 				<Alert
 					severity='error'
 					sx={{ my: 3 }}
-					title="You don't have enough funds in your luart wallet. "
-					action={
-						<TextButton
-							color='light'
-							type='button'
-							size='medium'
-							sx={{ display: { xs: 'none', sm: 'block' } }}
-							onClick={() => setView(View.DEPOSIT_FUNDS)}
-						>
-							Deposit funds
-						</TextButton>
-					}
+					title="You don't have enough LUNA in your wallet."
 				/>
 			)}
-			<SeparatedTexts left='Bidding Fee' right='0.1 $UST' sx={{ mt: 3 }} />
+			<SeparatedTexts left='Bidding Fee' right='Network fee only' sx={{ mt: 3 }} />
 			{errorMessage && (
 				<TxResult
 					errorMessage={errorMessage}
@@ -303,7 +290,7 @@ const OfferForm: React.FC<OfferFormProps> = ({
 					onErrorClose={() => setErrorMessage('')}
 				/>
 			)}
-			<Stack direction='row' spacing={3} mt={3}>
+			<Stack direction='row' spacing={3} sx={{ mt: 3 }}>
 				<Button
 					variant='contained'
 					color='tertiary'

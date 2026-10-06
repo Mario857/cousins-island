@@ -57,36 +57,34 @@ const Checkout: React.FC<CheckoutProps> = ({
   return (
     <>
       <StyledPrice>
-        <Typography variant="body3" color="text.primary">
+        <Typography variant="body3" sx={{ color: 'text.primary' }}>
           Price
         </Typography>
-        <Typography variant="h300" component="h6" color="text.primary">
+        <Typography variant="h300" component="h6" sx={{ color: 'text.primary' }}>
           {formattedPrice}
         </Typography>
       </StyledPrice>
       {details.map((detail, index) => (
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="space-between"
           key={`checkout-detail-${index}`}
-          sx={{ mb: index !== details.length - 1 ? 1 : 0 }}
+          sx={{ alignItems: 'center', justifyContent: 'space-between', mb: index !== details.length - 1 ? 1 : 0 }}
         >
-          <Typography variant="body3" color="text.primary">
+          <Typography variant="body3" sx={{ color: 'text.primary' }}>
             {detail.name}
           </Typography>
-          <Typography variant="h300" component="h6" color="text.primary">
+          <Typography variant="h300" component="h6" sx={{ color: 'text.primary' }}>
             {detail.value}
           </Typography>
         </Stack>
       ))}
-      <Box mt={4}>
+      <Box sx={{ mt: 4 }}>
         <Grid
           container
-          alignItems={{ md: 'center' }}
+          sx={{ alignItems: { md: 'center' } }}
           spacing={{ xs: 2, md: 4 }}
         >
-          <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
+          <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 2, md: 1 } }}>
             <Button
               variant="contained"
               color="tertiary"
@@ -97,7 +95,7 @@ const Checkout: React.FC<CheckoutProps> = ({
               Cancel
             </Button>
           </Grid>
-          <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
+          <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
             <Button
               variant="contained"
               color="primary"

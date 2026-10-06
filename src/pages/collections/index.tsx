@@ -64,8 +64,8 @@ const CollectionsPage = () => {
       breadcrumbs={breadcrumbs}
       loading={collectionsLoaders?.getCollections}
     >
-      <Grid container spacing={4} alignItems="center" mb={4}>
-        <Grid item xs={12} md={9}>
+      <Grid container spacing={4} sx={{ alignItems: 'center', mb: 4 }}>
+        <Grid size={{ xs: 12, md: 9 }}>
           <Heading
             variant="h800"
             component="h3"
@@ -82,7 +82,7 @@ const CollectionsPage = () => {
             All collections
           </Heading>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid size={{ xs: 12, md: 3 }}>
           <Select
             value={sortBy}
             fullWidth
@@ -103,7 +103,7 @@ const CollectionsPage = () => {
         collections={allCollections?.[sortBy as keyof typeof allCollections]}
         display="grid"
       />
-      <Box display={{ xs: 'block', md: 'none' }}>
+      <Box sx={{ display: { xs: 'block', md: 'none' } }}>
         <ScrollUpButton />
       </Box>
     </Layout>

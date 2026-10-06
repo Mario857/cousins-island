@@ -22,11 +22,11 @@ const BoxPage = () => {
 
   return (
     <Layout breadcrumbs={breadcrumbs} container="secondary">
-      <Grid container spacing={4} mb={8}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={4} sx={{ mb: 8 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <BoxImage />
         </Grid>
-        <Grid item xs={12} md={6} sx={{ width: '100%' }}>
+        <Grid size={{ xs: 12, md: 6 }} sx={{ width: '100%' }}>
           <Information />
         </Grid>
       </Grid>

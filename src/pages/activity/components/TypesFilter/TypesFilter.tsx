@@ -6,7 +6,7 @@ interface TypesFilterProps {
   types: {
     label: string;
     value: string;
-    icon?: JSX.Element;
+    icon?: React.JSX.Element;
   }[];
   selectedType: string;
   setSelectedType?: React.Dispatch<React.SetStateAction<string>>;
@@ -21,11 +21,9 @@ const TypesFilter: React.FC<TypesFilterProps> = ({
 }) => {
   return (
     <Box
-      width="100%"
-      sx={{ overflowX: { xs: 'scroll', md: 'auto' } }}
-      mb={{ xs: 3, md: 0 }}
+      sx={{ width: '100%', mb: { xs: 3, md: 0 }, overflowX: { xs: 'scroll', md: 'auto' } }}
     >
-      <Box minWidth={{ xs: 460, md: 'auto' }}>
+      <Box sx={{ minWidth: { xs: 460, md: 'auto' } }}>
         {types &&
           types.length > 0 &&
           types.map((type, index) => (

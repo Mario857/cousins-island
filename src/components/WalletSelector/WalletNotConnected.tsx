@@ -1,107 +1,117 @@
-import Button from '../Button/Button';
-import { WalletIcon } from 'theme/icons';
-import Menu from './Menu';
-import MenuItem from './MenuItem';
-import Typography from '@mui/material/Typography';
-import { ConnectType, useWallet } from '@terra-money/wallet-provider';
-import { useMediaQuery } from 'react-responsive';
-import Divider from '@mui/material/Divider';
+import Button from '../Button/Button'
+import { WalletIcon } from 'theme/icons'
+import Menu from './Menu'
+import MenuItem from './MenuItem'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import { useWallet } from 'wallet'
+import { getKeplrMobileDeepLink, isMobileDevice } from './mobile'
 
-export interface WalletNotConnectedProps {
-  open: boolean;
-  anchorEl: null | HTMLElement;
-  handleCloseMenu: () => void;
-  handleOpenMenu: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  isPrimary?: boolean;
-  btnNotConnectedId: string;
-  btnConnectedId: string;
+export interface WalletMenuProps {
+	open: boolean
+	anchorEl: null | HTMLElement
+	handleCloseMenu: () => void
+	handleOpenMenu: (event: React.MouseEvent<HTMLButtonElement>) => void
+	isPrimary?: boolean
+	btnNotConnectedId: string
+	btnConnectedId: string
 }
 
-const WalletNotConnected: React.FC<WalletNotConnectedProps> = ({
-  open,
-  anchorEl,
-  handleCloseMenu,
-  handleOpenMenu,
-  isPrimary,
-  btnNotConnectedId,
+/** @deprecated Use WalletMenuProps. */
+export type WalletNotConnectedProps = WalletMenuProps
+
+const WalletNotConnected: React.FC<WalletMenuProps> = ({
+	open,
+	anchorEl,
+	handleCloseMenu,
+	handleOpenMenu,
+	isPrimary,
+	btnNotConnectedId,
 }) => {
-  const isMobile = useMediaQuery({ maxWidth: 991 });
+	const { availableConnections, availableInstallations, connect, connectError } = useWallet()
 
-  const wallet = useWallet();
+	// Phone browsers can't run wallet extensions: offer Keplr's in-app browser instead.
+	const showMobileDeepLink = availableConnections.length === 0 && isMobileDevice()
 
-  const { availableConnections, availableInstallations, connect } = wallet;
+	const handleConnect = (type: (typeof availableConnections)[number]['type'], identifier: string) => {
+		handleCloseMenu()
+		// The provider stores the error in connectError, which is shown next time the menu opens.
+		connect(type, identifier).catch(() => undefined)
+	}
 
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (isMobile) return connect(ConnectType.WALLETCONNECT);
+	return (
+		<>
+			<Button
+				variant='contained'
+				color={isPrimary ? 'primary' : 'light'}
+				size={isPrimary ? 'large' : 'medium'}
+				id={btnNotConnectedId}
+				startIcon={isPrimary ? undefined : <WalletIcon viewBox='0 -2 20 20' />}
+				aria-controls={open ? 'not-connected-wallet-menu' : undefined}
+				aria-haspopup='true'
+				aria-expanded={open ? 'true' : undefined}
+				onClick={handleOpenMenu}
+				fullWidth={isPrimary}
+				sx={{ fontWeight: '400 !important' }}
+			>
+				Connect Wallet
+			</Button>
+			<Menu
+				id='not-connected-wallet-menu'
+				anchorEl={anchorEl}
+				open={open}
+				onClose={handleCloseMenu}
+				slotProps={{ list: { 'aria-labelledby': btnNotConnectedId } }}
+			>
+				<MenuItem disabled>
+					<Typography variant='body1' component='span' sx={{ color: 'text.secondary' }}>
+						Connect with
+					</Typography>
+				</MenuItem>
+				<Divider />
+				{availableConnections.map(({ type, name, identifier }) => (
+					<MenuItem key={`wallet-connection-${identifier}`} onClick={() => handleConnect(type, identifier)}>
+						<Typography variant='body2' sx={{ color: 'text.primary' }}>
+							{name}
+						</Typography>
+					</MenuItem>
+				))}
+				{showMobileDeepLink && (
+					<MenuItem
+						onClick={() => {
+							handleCloseMenu()
+							window.location.href = getKeplrMobileDeepLink(window.location.href)
+						}}
+					>
+						<Typography variant='body2' sx={{ color: 'text.primary' }}>
+							Open in Keplr mobile
+						</Typography>
+					</MenuItem>
+				)}
+				{availableInstallations.map(({ identifier, name, url }) => (
+					<MenuItem
+						key={`wallet-installation-${identifier}`}
+						onClick={() => {
+							handleCloseMenu()
+							window.open(url, '_blank', 'noopener,noreferrer')
+						}}
+					>
+						<Typography variant='body2' sx={{ color: 'text.primary' }}>
+							Install {name}
+						</Typography>
+					</MenuItem>
+				))}
+				{connectError && <Divider />}
+				{connectError && (
+					<MenuItem disabled sx={{ height: 'auto !important', whiteSpace: 'normal', maxWidth: 320 }}>
+						<Typography variant='body2' role='alert' sx={{ color: 'error.main' }}>
+							{connectError}
+						</Typography>
+					</MenuItem>
+				)}
+			</Menu>
+		</>
+	)
+}
 
-    handleOpenMenu(event);
-  };
-
-  return (
-    <>
-      <Button
-        variant="contained"
-        color={isPrimary ? 'primary' : 'light'}
-        size={isPrimary ? 'large' : 'medium'}
-        id={btnNotConnectedId}
-        startIcon={isPrimary ? undefined : <WalletIcon viewBox="0 -2 20 20" />}
-        aria-controls="not-connected-wallet-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleButtonClick}
-        fullWidth={isPrimary}
-        sx={{ fontWeight: '400 !important' }}
-      >
-        Connect Wallet
-      </Button>
-      <Menu
-        id="not-connected-wallet-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleCloseMenu}
-        MenuListProps={{
-          'aria-labelledby': btnNotConnectedId,
-        }}
-      >
-        <MenuItem onClick={handleCloseMenu} disabled>
-          <Typography variant="body1" color="text.secondary">
-            Wallet connection method
-          </Typography>
-        </MenuItem>
-        <Divider />
-        {availableConnections
-          .filter(({ type }) => type !== ConnectType.READONLY)
-          .map(({ type, name, identifier }) => (
-            <MenuItem
-              key={`wallet-available-connection-${identifier}`}
-              onClick={() => {
-                handleCloseMenu();
-                connect(type, identifier);
-              }}
-            >
-              <Typography variant="body2" color="text.primary">
-                {name}
-              </Typography>
-            </MenuItem>
-          ))}
-        {availableInstallations
-          .filter(({ type }) => type === ConnectType.EXTENSION)
-          .map(({ type, identifier, name, url }) => (
-            <MenuItem
-              key={`wallet-available-installation-${identifier}-${type}`}
-              onClick={() => {
-                handleCloseMenu();
-                window.open(url, '_blank');
-              }}
-            >
-              <Typography variant="body2" color="text.primary">
-                Install {name}
-              </Typography>
-            </MenuItem>
-          ))}
-      </Menu>
-    </>
-  );
-};
-
-export default WalletNotConnected;
+export default WalletNotConnected

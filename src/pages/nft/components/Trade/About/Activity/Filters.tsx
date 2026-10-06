@@ -18,13 +18,12 @@ const Filters: React.FC<FiltersProps> = ({
 }) => {
   return (
     <StyledFilters>
-      <Typography variant="h200" color="text.primary" component="h6" mb={2}>
+      <Typography variant="h200" sx={{ color: 'text.primary', mb: 2 }} component="h6">
         Showing:
       </Typography>
       {types.map((type) => (
         <Box
-          display="inline-block"
-          mr={2}
+          sx={{ display: 'inline-block', mr: 2 }}
           key={`token-activity-filter-${type.value}`}
         >
           <StyledTypeButton

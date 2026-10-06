@@ -6,7 +6,7 @@ const PrivacyPolicyPage = () => {
   return (
     <Layout>
         <ArticleContainer>
-          <Typography variant="h800" component="h1" mt={4} textAlign="center">
+          <Typography variant="h800" component="h1" sx={{ mt: 4, textAlign: 'center' }}>
             Privacy Policy
           </Typography>
           <h3>1. DEFINITIONS</h3>

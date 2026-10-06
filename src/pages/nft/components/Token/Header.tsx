@@ -14,7 +14,7 @@ const Header = () => {
   const isVideo = tokenDetails?.imageURL?.includes('.mp4') || collection?.isVideo;
 
   return (
-    <Box px={3} py={2}>
+    <Box sx={{ px: 3, py: 2 }}>
       <StyledExpandButton
         startIcon={<ResizeIcon sx={{ mr: 1 }} />}
         type="button"

@@ -36,18 +36,17 @@ const TransferForm: React.FC<TransferFormProps> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {loading.send || loading.broadcasting ? (
-        <Stack direction="row" alignItems="center" spacing="20px" mb={1}>
+        <Stack direction="row" sx={{ alignItems: 'center', mb: 1 }} spacing="20px">
           <LoadingSpinner color="secondary" size="large" />
           <div>
             <Typography
               variant="h400"
-              color="text.primary"
+              sx={{ color: 'text.primary', mb: '4px' }}
               component="h5"
-              mb="4px"
             >
               Transfer
             </Typography>
-            <Typography variant="body3" color="text.primary" component="p">
+            <Typography variant="body3" sx={{ color: 'text.primary' }} component="p">
               Confirm the transaction on your wallet
             </Typography>
           </div>

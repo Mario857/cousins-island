@@ -25,18 +25,16 @@ const BoxesPage = () => {
 					xs: 'column',
 					md: 'row',
 				}}
-				alignItems={{ md: 'center' }}
-				justifyContent='space-between'
-				sx={{ mb: 4 }}
+				sx={{ alignItems: { md: 'center' }, justifyContent: 'space-between', mb: 4 }}
 			>
 				<Heading variant='h800' component='h2'>
 					Boxes
 				</Heading>
-				<Stack direction='row' alignItems='center'>
-					<Typography variant='h500' color='text.secondary' component='h3' mr={1}>
+				<Stack direction='row' sx={{ alignItems: 'center' }}>
+					<Typography variant='h500' sx={{ color: 'text.secondary', mr: 1 }} component='h3'>
 						COUSIN Power
 					</Typography>
-					<Typography variant='h500' color='text.primary' component='h3' mr={2}>
+					<Typography variant='h500' sx={{ color: 'text.primary', mr: 2 }} component='h3'>
 						6,854.32
 					</Typography>
 					<a href={`${ROUTES.STAKING_APP}/trade`} target='_blank'>

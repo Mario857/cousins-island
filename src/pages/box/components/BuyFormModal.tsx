@@ -43,22 +43,20 @@ const BuyFormModal: React.FC<BuyFormModalProps> = ({
       width={608}
     >
       <>
-        <Typography variant="body2" color="text.primary" component="p" mb={3}>
+        <Typography variant="body2" sx={{ color: 'text.primary', mb: 3 }} component="p">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Typography>
         {details.map((detail, index) => (
           <Stack
             direction="row"
-            alignItems="center"
-            justifyContent="space-between"
+            sx={{ alignItems: 'center', justifyContent: 'space-between', mb: index !== details.length - 2 ? 1 : 3 }}
             key={`purchase-box-detail-${index}`}
-            mb={index !== details.length - 2 ? 1 : 3}
           >
-            <Typography variant="body2" color="text.primary">
+            <Typography variant="body2" sx={{ color: 'text.primary' }}>
               {detail.name}
             </Typography>
-            <Typography variant="h200" color="text.primary" component="h6">
+            <Typography variant="h200" sx={{ color: 'text.primary' }} component="h6">
               {detail.value}
             </Typography>
           </Stack>

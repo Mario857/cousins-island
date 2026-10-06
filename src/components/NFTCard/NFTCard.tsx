@@ -40,11 +40,9 @@ const NFTCard: React.FC<NFTCardProps> = ({
 
   return (
     <Link
-      to={{
-        pathname: `${ROUTES.COLLECTIONS}/${nftContractAddress}/${tokenId}`,
-        state: {
-          query: location.search,
-        },
+      to={`${ROUTES.COLLECTIONS}/${nftContractAddress}/${tokenId}`}
+      state={{
+        query: location.search,
       }}
     >
       <Fade in={true}>
@@ -62,22 +60,18 @@ const NFTCard: React.FC<NFTCardProps> = ({
             )}
             <Stack
               direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              sx={{ mt: 2, mb: 1, width: '100%' }}
+              sx={{ justifyContent: 'space-between', alignItems: 'center', mt: 2, mb: 1, width: '100%' }}
               spacing={1}
             >
               {collectionTitle && (
                 <Stack
                   direction="row"
-                  alignItems="center"
-                  sx={{ maxWidth: '80%' }}
+                  sx={{ alignItems: 'center', maxWidth: '80%' }}
                 >
                   <Typography
                     variant="body1"
-                    color="text.secondary"
                     noWrap
-                    sx={{ lineHeight: '12px !important' }}
+                    sx={{ color: 'text.secondary', lineHeight: '12px !important' }}
                   >
                     {collectionTitle}
                   </Typography>
@@ -87,19 +81,17 @@ const NFTCard: React.FC<NFTCardProps> = ({
               {showPrice && (
                 <Typography
                   variant="body1"
-                  color="text.secondary"
-                  sx={{ lineHeight: '12px !important' }}
+                  sx={{ color: 'text.secondary', lineHeight: '12px !important' }}
                 >
                   Price
                 </Typography>
               )}
             </Stack>
-            <Stack direction="row" justifyContent="space-between">
+            <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
               <Typography
                 variant="h200"
                 component="h6"
-                color="text.primary"
-                sx={{ maxWidth: showPrice ? '50%' : '100%' }}
+                sx={{ color: 'text.primary', maxWidth: showPrice ? '50%' : '100%' }}
                 noWrap={!showPrice}
               >
                 {name || `#${tokenId}`} {glitchedNFTs && <GlitchedMark />}
@@ -110,14 +102,13 @@ const NFTCard: React.FC<NFTCardProps> = ({
                     <Typography
                       variant="h200"
                       component="h6"
-                      color="text.primary"
-                      sx={{ maxWidth: '50%' }}
+                      sx={{ color: 'text.primary', maxWidth: '50%' }}
                       noWrap
                     >
                       <LazyLoadImage
                         src={
                           sellPriceCurrency === 'LUNA'
-                            ? '/images/luna.png'
+                            ? '/images/luna.svg'
                             : '/images/ust.png'
                         }
                         alt={sellPriceCurrency}
@@ -134,7 +125,7 @@ const NFTCard: React.FC<NFTCardProps> = ({
                     <Typography
                       variant="h200"
                       component="h6"
-                      color="text.secondary"
+                      sx={{ color: 'text.secondary' }}
                     >
                       No offers
                     </Typography>

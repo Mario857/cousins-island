@@ -14,16 +14,14 @@ const Input: React.FC<InputProps> = ({ label, error, ...rest }) => {
         <Typography
           variant="h300"
           component="label"
-          color="text.primary"
-          mb={1}
-          display="block"
+          sx={{ color: 'text.primary', mb: 1, display: 'block' }}
         >
           {label}
         </Typography>
       )}
       <StyledInput {...rest} />
       {error && (
-        <Typography variant="body2" color="error.light" mt={1}>
+        <Typography variant="body2" sx={{ color: 'error.light', mt: 1 }}>
           {error}
         </Typography>
       )}

@@ -32,5 +32,4 @@ function SvgDiscord(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgDiscord);
-export default __webpack_public_path__ + "static/media/discord.5bc0c41f.svg";
 export { ForwardRef as ReactComponent };

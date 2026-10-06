@@ -32,5 +32,4 @@ function SvgSearch(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgSearch);
-export default __webpack_public_path__ + "static/media/search.21878fa0.svg";
 export { ForwardRef as ReactComponent };

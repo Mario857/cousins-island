@@ -26,9 +26,9 @@ const TransferCompleted: React.FC<TransferCompletedProps> = ({
 
   return (
     <>
-      <Box display="flex" alignItems="center" flexDirection="column">
-        <Box width="319px">
-          <Box height="319px" width="319px">
+      <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <Box sx={{ width: '319px' }}>
+          <Box sx={{ height: '319px', width: '319px' }}>
             <TokenMedia
               src={tokenDetails?.imageURL}
               alt={tokenDetails?.name}
@@ -38,16 +38,14 @@ const TransferCompleted: React.FC<TransferCompletedProps> = ({
           {collection && (
             <Typography
               variant="h300"
-              color="text.primary"
+              sx={{ color: 'text.primary', mt: 2, mb: 1 }}
               component="h6"
-              mt={2}
-              mb={1}
             >
               {collection?.title}
               <ExclusiveMark isExclusive={collection?.isExclusive!} />
             </Typography>
           )}
-          <Typography variant="h500" color="text.primary" component="h5">
+          <Typography variant="h500" sx={{ color: 'text.primary' }} component="h5">
             {tokenDetails?.name}
           </Typography>
         </Box>

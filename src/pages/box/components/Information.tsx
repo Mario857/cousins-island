@@ -26,29 +26,28 @@ const Trade = () => {
   return (
     <Card>
       <CardHeader>
-        <MuiBox p={3}>
+        <MuiBox sx={{ p: 3 }}>
           <Typography
             variant="body4"
-            color="text.secondary"
-            mb={1}
+            sx={{ color: 'text.secondary', mb: 1 }}
             component="p"
           >
             Luart.io <BlueCheckIcon viewBox="-5 -9 27 27" />
           </Typography>
-          <Heading variant="h600" component="h2" mb={2}>
+          <Heading variant="h600" component="h2" sx={{ mb: 2 }}>
             The name of the chest
           </Heading>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
             {statistics.map(({ name, value }, index) => (
               <Typography
                 variant="body2"
-                color="text.secondary"
+                sx={{ color: 'text.secondary' }}
                 key={`statistics-${index}`}
               >
                 {name}{' '}
                 <Typography
                   variant="body2"
-                  color="text.primary"
+                  sx={{ color: 'text.primary' }}
                   component="span"
                 >
                   {value}
@@ -59,18 +58,17 @@ const Trade = () => {
         </MuiBox>
       </CardHeader>
       <CardBody>
-        <MuiBox p={3}>
-          <Typography variant="body3" color="text.primary" component="p" mb={1}>
+        <MuiBox sx={{ p: 3 }}>
+          <Typography variant="body3" sx={{ color: 'text.primary', mb: 1 }} component="p">
             Current Price
           </Typography>
           <Stack
             direction="row"
-            alignItems="center"
+            sx={{ alignItems: 'center', mb: { xs: 3, md: 2 } }}
             spacing={1}
-            mb={{ xs: 3, md: 2 }}
           >
             <StyledUSTImage src="/images/ust.png" alt="UST" />
-            <Typography variant="h600" color="text.primary" component="h2">
+            <Typography variant="h600" sx={{ color: 'text.primary' }} component="h2">
               100.00 $UST
             </Typography>
           </Stack>
@@ -82,14 +80,12 @@ const Trade = () => {
           />
           <Stack
             direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            mt={1}
+            sx={{ alignItems: 'center', justifyContent: 'space-between', mt: 1 }}
           >
-            <Typography variant="body2" color="text.primary">
+            <Typography variant="body2" sx={{ color: 'text.primary' }}>
               LUA Power required
             </Typography>
-            <Typography variant="h200" color="text.primary" component="h6">
+            <Typography variant="h200" sx={{ color: 'text.primary' }} component="h6">
               4000
             </Typography>
           </Stack>

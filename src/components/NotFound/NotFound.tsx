@@ -13,6 +13,7 @@ interface NotFoundProps {
   buttonTitle?: string;
   buttonOnClick?: (e: React.MouseEvent<HTMLElement>) => void;
   mt?: number;
+  children?: React.ReactNode;
 }
 
 const NotFound: React.FC<NotFoundProps> = ({
@@ -26,12 +27,12 @@ const NotFound: React.FC<NotFoundProps> = ({
 }) => {
   return (
     <Fade in={true}>
-      <Box mt={mt} textAlign="center">
-        <Typography variant="h600" color="text.primary" component="h3" mb={1}>
+      <Box sx={{ mt: mt, textAlign: 'center' }}>
+        <Typography variant="h600" sx={{ color: 'text.primary', mb: 1 }} component="h3">
           {heading}
         </Typography>
         <StyledDescriptionWrapper>
-          <Typography variant="h400" color="text.secondary" component="h5">
+          <Typography variant="h400" sx={{ color: 'text.secondary' }} component="h5">
             {description}
           </Typography>
         </StyledDescriptionWrapper>

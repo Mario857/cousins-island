@@ -24,7 +24,7 @@ const ExclusiveMark: React.FC<ExclusiveMarkProps> = ({ isExclusive, sx }) => {
 		: 'Not launched on Cousin Island'
 
 	return (
-		<Box ml={1} component='span' sx={sx}>
+		<Box component='span' sx={[{ ml: 1 }, ...(Array.isArray(sx) ? sx : [sx])]}>
 			<Tooltip title={title} arrow placement='top'>
 				<span>{checkedIcon}</span>
 			</Tooltip>

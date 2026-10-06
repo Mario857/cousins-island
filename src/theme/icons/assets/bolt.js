@@ -32,5 +32,4 @@ function SvgBolt(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgBolt);
-export default __webpack_public_path__ + "static/media/bolt.cbb49587.svg";
 export { ForwardRef as ReactComponent };

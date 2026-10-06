@@ -30,9 +30,7 @@ const TransactionCompleted: React.FC<TransactionCompletedProps> = ({
       </StyledImageWrapper>
       <Typography
         variant="body4"
-        color="text.primary"
-        mt={2}
-        textAlign="center"
+        sx={{ color: 'text.primary', mt: 2, textAlign: 'center' }}
         component="p"
       >
         {token?.name}

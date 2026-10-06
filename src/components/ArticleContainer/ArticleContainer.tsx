@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyledArticleContainer } from './ArticleContainer.styled';
 
-const ArticleContainer: React.FC = ({ children }) => {
+const ArticleContainer: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   return <StyledArticleContainer>{children}</StyledArticleContainer>;
 };
 

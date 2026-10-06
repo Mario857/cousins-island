@@ -9,14 +9,14 @@ import {
 import Toolbar from '@mui/material/Toolbar'
 import Stack from '@mui/material/Stack'
 import * as ROUTES from 'constants/routes'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import WalletSelector from 'components/WalletSelector/WalletSelector'
 import { CloseIcon, MenuIcon } from 'theme/icons'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Box from '@mui/material/Box'
 import SecondaryFooter from 'components/SecondaryFooter/SecondaryFooter'
 import blockchain from 'utils/blockchain/blockchain'
-import { useWallet, WalletStatus } from '@terra-money/wallet-provider'
+import { useWallet, WalletStatus } from 'wallet'
 import Container from 'components/Container/Container'
 import TestnetBadge from './TestnetBadge'
 import { useMediaQuery } from 'react-responsive'
@@ -32,7 +32,6 @@ import Search from './Search/Search'
 
 const Navbar = () => {
 	const location = useLocation()
-	const history = useHistory()
 
 	const [openMobile, setOpenMobile] = useState(false)
 
@@ -102,11 +101,17 @@ const Navbar = () => {
 		return () => window.removeEventListener('resize', resize)
 	}, [])
 
-	useEffect(() => {
-		const unlisten = history.listen(handleCloseMobile)
+	// Close the mobile menu on every navigation (replaces history.listen).
+	const isFirstLocation = useRef(true)
 
-		return unlisten
-	}, [])
+	useEffect(() => {
+		if (isFirstLocation.current) {
+			isFirstLocation.current = false
+			return
+		}
+
+		handleCloseMobile()
+	}, [location])
 
 	const [isTestnet, setIsTestnet] = useState(false)
 
@@ -124,8 +129,8 @@ const Navbar = () => {
 		<StyledAppBar position='static'>
 			<Container>
 				<Toolbar>
-					<Box mr={{ xs: 0, md: 2, lg: 4 }}>
-						<Stack direction='row' alignItems='center' spacing={2}>
+					<Box sx={{ mr: { xs: 0, md: 2, lg: 4 } }}>
+						<Stack direction='row' sx={{ alignItems: 'center' }} spacing={2}>
 							<Link to={ROUTES.HOME} onClick={handleCloseMobile}>
 								<StyledLogo
 									src={
@@ -139,21 +144,17 @@ const Navbar = () => {
 					</Box>
 					<Stack
 						direction='row'
-						alignItems='center'
-						justifyContent={{
+						sx={{ alignItems: 'center', justifyContent: {
 							xs: 'flex-end',
 							md: 'space-between',
-						}}
-						sx={{ width: '100%' }}
+						}, width: '100%' }}
 						spacing={{ xs: 0, md: 2, lg: 4 }}
 					>
 						<Stack
 							direction='row'
-							order={{ xs: 3, md: 2 }}
-							sx={{ flexGrow: { md: 1 }, position: 'relative' }}
-							justifyContent={{
+							sx={{ order: { xs: 3, md: 2 }, justifyContent: {
 								xs: 'flex-end',
-							}}
+							}, flexGrow: { md: 1 }, position: 'relative' }}
 							spacing={2}
 						>
 							{!isMobile && <Search />}
@@ -168,8 +169,7 @@ const Navbar = () => {
 						<Stack
 							direction='row'
 							spacing={{ xs: 2, lg: 3 }}
-							alignItems='center'
-							order={{ xs: 2, md: 3 }}
+							sx={{ alignItems: 'center', order: { xs: 2, md: 3 } }}
 						>
 							<StyledNavContainer open={openMobile}>
 								<StyledNav>

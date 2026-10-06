@@ -87,8 +87,7 @@ const Footer = () => {
 				return (
 					<Typography
 						variant='body2'
-						color='text.primary'
-						sx={{ lineHeight: '26px' }}
+						sx={{ color: 'text.primary', lineHeight: '26px' }}
 					>
 						<StyledLink
 							target='_blank'
@@ -135,17 +134,15 @@ const Footer = () => {
 		<StyledFooter>
 			<Container>
 				<Grid container>
-					<Grid item xs={12} md={3}>
+					<Grid size={{ xs: 12, md: 3 }}>
 						<StyledHeading>Get the latest Cousin Island updates</StyledHeading>
 						<SignUpForm />
 					</Grid>
-					<Grid item xs={12} md={9}>
+					<Grid size={{ xs: 12, md: 9 }}>
 						<Grid container spacing={4} sx={{ ml: { md: 6 } }}>
 							{gridItems.map((item, index) => (
 								<Grid
-									item
-									xs={12}
-									md={4}
+									size={{ xs: 12, md: 4 }}
 									sx={{ mb: { xs: 5, mb: 0 } }}
 									key={`footer-grid-item-${index}`}
 								>
@@ -157,10 +154,10 @@ const Footer = () => {
 					</Grid>
 				</Grid>
 				<Grid container sx={{ mt: { xs: 0, md: 8 } }}>
-					<Grid item xs={12} md={5} lg={4} order={{ xs: 2, md: 1 }}>
+					<Grid size={{ xs: 12, md: 5, lg: 4 }} sx={{ order: { xs: 2, md: 1 } }}>
 						<Stack
 							direction={{ xs: 'column', md: 'row' }}
-							alignItems={{ xs: 'flex-start', md: 'center' }}
+							sx={{ alignItems: { xs: 'flex-start', md: 'center' } }}
 							spacing={{ xs: 2, md: 1 }}
 						>
 							<StyledLogo src='/images/logo2.svg' alt='Cousin Island Logo' />
@@ -169,7 +166,7 @@ const Footer = () => {
 							</span>
 						</Stack>
 					</Grid>
-					<Grid item xs={12} md={7} lg={8} order={{ xs: 1, md: 2 }}>
+					<Grid size={{ xs: 12, md: 7, lg: 8 }} sx={{ order: { xs: 1, md: 2 } }}>
 						<StyledBottomLinks>
 							{bottomLinks.map((link, index) => (
 								<li key={`footer-nav-link-${index}`}>{renderLink(link)}</li>

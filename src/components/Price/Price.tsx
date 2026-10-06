@@ -14,10 +14,10 @@ interface PriceProps {
 
 const Price: React.FC<PriceProps> = ({ amount, currency }) => {
   return (
-    <Stack direction="row" alignItems="center">
+    <Stack direction="row" sx={{ alignItems: 'center' }}>
       <LazyLoadImage
         alt={currency}
-        src={currency === 'LUNA' ? '/images/luna.png' : '/images/ust.png'}
+        src={currency === 'LUNA' ? '/images/luna.svg' : '/images/ust.png'}
         height="16px"
         width="16px"
         style={{ marginBottom: -2 }}
@@ -25,13 +25,11 @@ const Price: React.FC<PriceProps> = ({ amount, currency }) => {
       <Typography
         variant="h200"
         component="h6"
-        display="inline-block"
-        ml={1}
-        mr={1 / 2}
+        sx={{ display: 'inline-block', ml: 1, mr: 1 / 2 }}
       >
         {formatDecimal(amount)}
       </Typography>
-      <Typography variant="body2" color="text.primary">
+      <Typography variant="body2" sx={{ color: 'text.primary' }}>
         ${currency}
       </Typography>
     </Stack>

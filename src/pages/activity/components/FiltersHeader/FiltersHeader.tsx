@@ -13,12 +13,11 @@ const FiltersHeader: React.FC<FiltersHeaderProps> = ({
   showResetButton,
 }) => {
   return (
-    <Stack direction="row" alignItems="center" spacing={2} mb={{ md: 3 }}>
+    <Stack direction="row" sx={{ alignItems: 'center', mb: { md: 3 } }} spacing={2}>
       <Typography
         variant="h500"
         component="h5"
-        color="text.primary"
-        sx={{ fontSize: '24px !important' }}
+        sx={{ color: 'text.primary', fontSize: '24px !important' }}
       >
         Filters
       </Typography>

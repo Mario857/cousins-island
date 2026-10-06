@@ -1,8 +1,11 @@
-import { Theme } from '@mui/material';
+import { PaletteColor, Theme } from '@mui/material';
 import MuiButton from '@mui/material/Button';
 import { palette } from 'theme/palette';
 import styled, { css } from 'styled-components';
-import MuiLoadingButton from '@mui/lab/LoadingButton';
+
+// Custom colors (light, dark, tertiary) are added to the palette in theme/theme.ts.
+const getPaletteColor = (theme: Theme, color: string | undefined) =>
+  (theme.palette as unknown as Record<string, PaletteColor>)[color || 'primary'];
 
 const getButtonPropertiesBySize = (size: string | undefined) => {
   switch (size) {
@@ -77,11 +80,11 @@ const getButtonPropertiesByColor = (color: string | undefined) => {
   }
 };
 
-export const StyledButton = styled(MuiLoadingButton)`
+export const StyledButton = styled(MuiButton)`
   border-radius: 6px;
   box-shadow: none;
   text-transform: none;
-  background: ${(props) => props.theme.palette[props.color || 'primary'].main};
+  background: ${(props) => getPaletteColor(props.theme, props.color).main};
   font-weight: 600;
   font-family: 'Inter', sans-serif;
 
@@ -92,7 +95,7 @@ export const StyledButton = styled(MuiLoadingButton)`
     `}
   ${(props) => getButtonPropertiesBySize(props.size)}
   ${(props) => getButtonPropertiesByColor(props.color)}
-  .MuiLoadingButton-loadingIndicator {
+  .MuiButton-loadingIndicator {
     position: relative;
     left: auto;
   }
@@ -102,13 +105,11 @@ export const StyledButton = styled(MuiLoadingButton)`
   }
   &:hover {
     box-shadow: none;
-    background: ${(props) =>
-      props.theme.palette[props.color || 'primary'].light};
+    background: ${(props) => getPaletteColor(props.theme, props.color).light};
   }
   &:disabled {
     opacity: 0.5;
-    background: ${(props) =>
-      props.theme.palette[props.color || 'primary'].light};
+    background: ${(props) => getPaletteColor(props.theme, props.color).light};
     ${(props) => getButtonPropertiesByColor(props.color)}
     ${(props) =>
       props.loading &&

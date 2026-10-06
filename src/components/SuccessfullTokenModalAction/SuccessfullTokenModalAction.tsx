@@ -32,7 +32,7 @@ const SuccessfullTokenModalAction: React.FC<SuccessfullTokenModalActionProps> =
     return (
       <>
         {tokenDetails && (
-          <Box display="flex" alignItems="center" flexDirection="column">
+          <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
             <Card sx={{ p: 2 }}>
               <TokenMedia
                 src={tokenDetails?.imageURL}
@@ -43,9 +43,8 @@ const SuccessfullTokenModalAction: React.FC<SuccessfullTokenModalActionProps> =
             </Card>
             <Typography
               variant="body3"
-              color="text.primary"
+              sx={{ color: 'text.primary', mt: 2 }}
               component="p"
-              mt={2}
             >
               {tokenDetails?.name}
             </Typography>

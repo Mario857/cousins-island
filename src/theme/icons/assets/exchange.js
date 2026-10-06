@@ -32,5 +32,4 @@ function SvgExchange(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgExchange);
-export default __webpack_public_path__ + "static/media/exchange.6d559066.svg";
 export { ForwardRef as ReactComponent };

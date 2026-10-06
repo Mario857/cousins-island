@@ -12,20 +12,21 @@ import {
 	getUserTradingDetails,
 	getAllBidsForToken,
 } from 'store/actions/token'
-import { RouteComponentProps, useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import Fade from '@mui/material/Fade'
 import Token from './components/Token/Token'
 import CollectionDetails from './components/Token/CollectionDetails'
 import Card from 'components/Card/Card'
 
-interface MatchParams {
+type MatchParams = {
 	collectionAddress: string
 	tokenId: string
 }
 
-const NFTDetailsPage: React.FC<RouteComponentProps<MatchParams>> = props => {
-	const nftContractAddress = props.match.params.collectionAddress
-	const tokenId = props.match.params.tokenId
+const NFTDetailsPage = () => {
+	const params = useParams<MatchParams>()
+	const nftContractAddress = params.collectionAddress!
+	const tokenId = params.tokenId!
 	const { tokenDetails, collection, tokenLoaders } = useSelector(
 		(state: State) => state.token
 	)
@@ -77,15 +78,15 @@ const NFTDetailsPage: React.FC<RouteComponentProps<MatchParams>> = props => {
 				<Fade in={true}>
 					<div>
 						<Grid container spacing={{ xs: 0, md: 4 }}>
-							<Grid item xs={12} md={6}>
-								<Box position={{ md: 'sticky' }} top={{ md: '32px' }}>
+							<Grid size={{ xs: 12, md: 6 }}>
+								<Box sx={{ position: { md: 'sticky' }, top: { md: '32px' } }}>
 									<Token
 										previousQuery={previousQuery}
 										isVideo={Boolean(collection.isVideo)}
 									/>
 								</Box>
 							</Grid>
-							<Grid item xs={12} md={6}>
+							<Grid size={{ xs: 12, md: 6 }}>
 								<Trade previousQuery={previousQuery} />
 							</Grid>
 						</Grid>

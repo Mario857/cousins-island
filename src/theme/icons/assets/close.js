@@ -32,5 +32,4 @@ function SvgClose(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgClose);
-export default __webpack_public_path__ + "static/media/close.05d6a570.svg";
 export { ForwardRef as ReactComponent };

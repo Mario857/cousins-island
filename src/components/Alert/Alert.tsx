@@ -14,7 +14,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 
 interface AlertProps extends MuiAlertProps {
   title?: string;
-  description?: string | JSX.Element;
+  description?: string | React.JSX.Element;
   showIcon?: boolean;
 }
 
@@ -33,26 +33,26 @@ const Alert: React.FC<AlertProps> = ({
     switch (severity) {
       case 'error':
         return (
-          <Box color="error.light">
+          <Box sx={{ color: 'error.light' }}>
             <InfoIcon fontSize="small" />
           </Box>
         );
       case 'warning':
         return (
-          <Box color="warning.light">
+          <Box sx={{ color: 'warning.light' }}>
             <InfoIcon fontSize="small" />
           </Box>
         );
       case 'info':
         return (
-          <Box marginTop={'3px'}>
+          <Box sx={{ marginTop: '3px' }}>
             <GlitchedSignIcon fontSize="small" />
           </Box>
         );
       case 'success':
       default:
         return (
-          <Box color="primary.main">
+          <Box sx={{ color: 'primary.main' }}>
             <CheckCircleIcon fontSize="small" />
           </Box>
         );
@@ -76,7 +76,7 @@ const Alert: React.FC<AlertProps> = ({
       <span>
         {title && (
           <AlertTitle sx={{ mb: description ? 1 : 0, textAlign: 'left' }}>
-            <Typography variant="h200" color="text.primary">
+            <Typography variant="h200" sx={{ color: 'text.primary' }}>
               {title}
             </Typography>
           </AlertTitle>
@@ -84,7 +84,9 @@ const Alert: React.FC<AlertProps> = ({
         {description && (
           <Typography
             variant="body2"
-            color={variant === 'standard' ? 'text.primary' : 'text.secondary'}
+            sx={{
+              color: variant === 'standard' ? 'text.primary' : 'text.secondary',
+            }}
           >
             {description}
           </Typography>

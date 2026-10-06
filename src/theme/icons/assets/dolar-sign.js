@@ -32,5 +32,4 @@ function SvgDolarSign(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgDolarSign);
-export default __webpack_public_path__ + "static/media/dolar-sign.f397ecc1.svg";
 export { ForwardRef as ReactComponent };

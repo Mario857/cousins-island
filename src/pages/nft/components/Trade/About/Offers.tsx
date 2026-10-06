@@ -14,7 +14,7 @@ import AcceptOfferModal from '../AcceptOfferModal/AcceptOfferModal';
 import { formatDistance } from 'date-fns';
 import Select from 'components/Select/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { useWallet } from '@terra-money/wallet-provider';
+import { useWallet } from 'wallet';
 import CancelBidModal from 'components/CancelBidModal/CancelBidModal';
 
 interface OfferProps {
@@ -53,20 +53,16 @@ const Offer: React.FC<OfferProps> = ({
 
   return (
     <Box
-      px={3}
-      py={2}
-      borderBottom={!isLast ? '1px solid rgba(255, 255, 255, 0.18)' : undefined}
+      sx={{ px: 3, py: 2, borderBottom: !isLast ? '1px solid rgba(255, 255, 255, 0.18)' : undefined }}
     >
       {amount && currency && (
         <Stack
           direction="row"
-          alignItems="flex-end"
-          justifyContent="space-between"
-          mb={1}
+          sx={{ alignItems: 'flex-end', justifyContent: 'space-between', mb: 1 }}
         >
           <div>
             <LazyLoadImage
-              src={currency === 'LUNA' ? '/images/luna.png' : '/images/ust.png'}
+              src={currency === 'LUNA' ? '/images/luna.svg' : '/images/ust.png'}
               alt={currency}
               width="16px"
               height="16px"
@@ -74,15 +70,12 @@ const Offer: React.FC<OfferProps> = ({
             />
             <Typography
               variant="h300"
-              color="text.primary"
+              sx={{ color: 'text.primary', display: 'inline-block', mr: '4px', ml: '8px' }}
               component="h5"
-              display="inline-block"
-              mr="4px"
-              ml="8px"
             >
               {formatDecimal(amount)}
             </Typography>
-            <Typography variant="body3" color="text.primary">
+            <Typography variant="body3" sx={{ color: 'text.primary' }}>
               ${currency}
             </Typography>
           </div>
@@ -110,28 +103,24 @@ const Offer: React.FC<OfferProps> = ({
       )}
       <Stack
         direction="row"
-        alignItems="flex-end"
-        justifyContent="space-between"
+        sx={{ alignItems: 'flex-end', justifyContent: 'space-between' }}
       >
         <div>
           <Typography
             variant="body2"
-            color="text.primary"
-            display="inline-block"
-            mr="4px"
+            sx={{ color: 'text.primary', display: 'inline-block', mr: '4px' }}
           >
             from
           </Typography>
           <Typography
             variant="h200"
-            color="text.primary"
+            sx={{ color: 'text.primary', display: 'inline-block' }}
             component="h6"
-            display="inline-block"
           >
             {shortCreatorAddress}
           </Typography>
         </div>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {formatDistance(new Date(timestamp), new Date(), {
             addSuffix: true,
           })}
@@ -187,25 +176,20 @@ const Offers = () => {
       !sortedBids ||
       sortedBids?.length <= 0 ? (
         <Box
-          px={3}
-          py={6}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          minHeight={132}
+          sx={{ px: 3, py: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 132 }}
         >
           {tokenLoaders?.getAllBidsForToken ||
           tokenLoaders?.removeBidFromTokenBids ? (
             <LoadingSpinner color="secondary" size="large" />
           ) : (
-            <Typography variant="body3" color="text.primary" component="p">
+            <Typography variant="body3" sx={{ color: 'text.primary' }} component="p">
               No bids for {tokenName}
             </Typography>
           )}
         </Box>
       ) : (
         <>
-          <Box px={3} py={2} borderBottom="1px solid rgba(255, 255, 255, 0.18)">
+          <Box sx={{ px: 3, py: 2, borderBottom: '1px solid rgba(255, 255, 255, 0.18)' }}>
             <Select
               value={sortBy}
               fullWidth

@@ -70,11 +70,9 @@ const NotificationsDesktop = () => {
 						<>
 							<Stack
 								direction='row'
-								alignItems='center'
-								justifyContent='space-between'
-								mb={2}
+								sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 2 }}
 							>
-								<Typography variant='h200' color='text.primary' component='h6'>
+								<Typography variant='h200' sx={{ color: 'text.primary' }} component='h6'>
 									Notifications
 								</Typography>
 								<Tooltip open={showTooltip} title='Notifications marked as read' arrow>
@@ -101,15 +99,13 @@ const NotificationsDesktop = () => {
 						</>
 					) : (
 						<>
-							<Typography variant='h200' color='text.primary' component='h6'>
+							<Typography variant='h200' sx={{ color: 'text.primary' }} component='h6'>
 								No notifications
 							</Typography>
 							<Typography
 								variant='body2'
-								color='text.secondary'
+								sx={{ color: 'text.secondary', mt: 1, mb: 3 }}
 								component='p'
-								mt={1}
-								mb={3}
 							>
 								Here you will find notifications about your sales, but first
 								<br />

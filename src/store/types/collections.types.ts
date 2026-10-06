@@ -3,7 +3,7 @@ import {
   NFTTokenDetails,
 } from 'utils/blockchain/blockchain.interface';
 
-interface Collection {
+export interface Collection {
   details: NFTCollectionDetails;
   tokens: {
     pagesCount: number;

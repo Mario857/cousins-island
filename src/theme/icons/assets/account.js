@@ -87,5 +87,4 @@ function SvgAccount(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/ React.forwardRef(SvgAccount)
-export default __webpack_public_path__ + 'static/media/account.3c81c9e2.svg'
 export { ForwardRef as ReactComponent }

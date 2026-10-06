@@ -17,12 +17,12 @@ const NotificationsMobile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    window.Intercom('update', {
+    window.Intercom?.('update', {
       hide_default_launcher: true,
     });
 
     return () => {
-      window.Intercom('update', {
+      window.Intercom?.('update', {
         hide_default_launcher: false,
       });
 
@@ -41,15 +41,14 @@ const NotificationsMobile = () => {
         </button>
         <Typography
           variant="h400"
-          color="text.primary"
           component="h6"
-          sx={{ fontSize: '20px !important' }}
+          sx={{ color: 'text.primary', fontSize: '20px !important' }}
         >
           Notifications
         </Typography>
       </StyledHeader>
       {notifications && notifications.length > 0 ? (
-        <Box px={2}>
+        <Box sx={{ px: 2 }}>
           {notifications.map((notification) => (
             <Notification
               notification={notification}
@@ -59,28 +58,19 @@ const NotificationsMobile = () => {
         </Box>
       ) : (
         <Box
-          textAlign="center"
-          p={2}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="column"
-          sx={{ minHeight: 'calc(100vh - 57px)' }}
+          sx={{ textAlign: 'center', p: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', minHeight: 'calc(100vh - 57px)' }}
         >
           <Typography
             variant="h400"
-            color="text.primary"
             component="h6"
-            mb={2}
-            sx={{ lineHeight: '32px !important', fontSize: '20px !important' }}
+            sx={{ color: 'text.primary', mb: 2, lineHeight: '32px !important', fontSize: '20px !important' }}
           >
             No notifications
           </Typography>
           <Typography
             variant="body2"
-            color="text.primary"
             component="p"
-            sx={{ lineHeight: '20px !important' }}
+            sx={{ color: 'text.primary', lineHeight: '20px !important' }}
           >
             Here you will find notifications about your sales, but first someone
             have to buy one of your items

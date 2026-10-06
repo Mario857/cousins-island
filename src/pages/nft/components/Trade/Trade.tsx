@@ -5,7 +5,7 @@ import Card from 'components/Card/Card';
 import Price from './Price';
 import BuyNow from './BuyNow/BuyNow';
 import CancelSelling from './CancelSelling/CancelSelling';
-import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
+import { useWallet, WalletStatus } from 'wallet';
 import WalletSelector from 'components/WalletSelector/WalletSelector';
 import { useSelector } from 'react-redux';
 import { State } from 'store/store';
@@ -89,10 +89,7 @@ const Trade: React.FC<TradeProps> = ({ previousQuery }) => {
             )}
             {userTradeStatus === UserTradeStatus.NOT_CONNECTED ? (
               <Box
-                px={3}
-                pt={3}
-                pb={6}
-                borderTop="1px solid rgba(255, 255, 255, 0.18)"
+                sx={{ px: 3, pt: 3, pb: 6, borderTop: '1px solid rgba(255, 255, 255, 0.18)' }}
               >
                 {wallet.status === WalletStatus.WALLET_NOT_CONNECTED && (
                   <WalletSelector
@@ -103,16 +100,12 @@ const Trade: React.FC<TradeProps> = ({ previousQuery }) => {
               </Box>
             ) : (
               <>
-                {userTradeStatus !== UserTradeStatus.NO_OFFERS && (
+                {(userTradeStatus !== UserTradeStatus.NO_OFFERS ||
+                  userTradingDetails?.canUserBid) && (
                   <Box
-                    px={3}
-                    pt={3}
-                    pb={6}
-                    borderTop={
-                      userTradeStatus === UserTradeStatus.CAN_SELL
+                    sx={{ px: 3, pt: 3, pb: 6, borderTop: userTradeStatus === UserTradeStatus.CAN_SELL
                         ? undefined
-                        : '1px solid rgba(255, 255, 255, 0.18)'
-                    }
+                        : '1px solid rgba(255, 255, 255, 0.18)' }}
                   >
                     <CancelSelling userTradeStatus={userTradeStatus} />
                     <Sell userTradeStatus={userTradeStatus} />
@@ -120,6 +113,7 @@ const Trade: React.FC<TradeProps> = ({ previousQuery }) => {
                     <BuyNow userTradeStatus={userTradeStatus} />
                     <PlaceBid
                       userTradeStatus={userTradeStatus}
+                      canUserBid={Boolean(userTradingDetails?.canUserBid)}
                       sellPrice={Number(sellPriceAmount)}
                       sellCurrency={String(sellPriceCurrency)}
                     />

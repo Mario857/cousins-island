@@ -6,11 +6,11 @@ import Offers from './Offers'
 import { StyledAbout, StyledContent } from './About.styled'
 import Traits from './Traits'
 import queryString from 'query-string'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Activity from './Activity/Activity'
 
 const About = () => {
-	const history = useHistory()
+	const navigate = useNavigate()
 	const location = useLocation()
 
 	const parsedQuery = queryString.parse(location.search)
@@ -20,10 +20,13 @@ const About = () => {
 	const handleChange = (e: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue)
 
-		history.replace({
-			pathname: location.pathname,
-			search: `?tab=${newValue}`,
-		})
+		navigate(
+			{
+				pathname: location.pathname,
+				search: `?tab=${newValue}`,
+			},
+			{ replace: true }
+		)
 	}
 
 	const tabs = [
@@ -49,10 +52,12 @@ const About = () => {
 			<Tabs
 				value={value}
 				onChange={handleChange}
-				TabIndicatorProps={{
-					style: {
-						background: 'white',
-						height: 2,
+				slotProps={{
+					indicator: {
+						style: {
+							background: 'white',
+							height: 2,
+						},
 					},
 				}}
 			>

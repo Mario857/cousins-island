@@ -32,5 +32,4 @@ function SvgMedium(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgMedium);
-export default __webpack_public_path__ + "static/media/medium.c751138e.svg";
 export { ForwardRef as ReactComponent };

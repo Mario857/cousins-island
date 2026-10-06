@@ -1,3 +1,4 @@
+import getTerraFinderUrl from 'utils/getTerraFinderUrl'
 import Card from 'components/Card/Card';
 import {
   StyledBadge,
@@ -19,7 +20,7 @@ import Stack from '@mui/material/Stack';
 import { formatDistance } from 'date-fns';
 import { useState } from 'react';
 import Fade from '@mui/material/Fade';
-import LazyLoad from 'react-lazyload';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import * as ROUTES from 'constants/routes';
 import { Link } from 'react-router-dom';
 import {
@@ -81,12 +82,12 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
   const renderAddressComponent = (address?: string, shortAddress?: string) => {
     return <Typography
       variant={isMobile ? 'h100' : 'h200'}
-      color="text.primary"
+      sx={{ color: 'text.primary' }}
     >
       <StyledLinkWrapper>
         <a
           target="_blank"
-          href={`https://finder.terra.money/columbus-5/address/${address}`}
+          href={address ? getTerraFinderUrl(address) : undefined}
         >
           {shortAddress}
         </a>
@@ -96,13 +97,13 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
 
   return (
     <Card sx={{ padding: { xs: '12px', md: '24px' } }}>
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
         <div>
           {!isVideo ? (
             <StyledImageWrapper>
               <StyledImagePlaceholder />
               {tokenDetails?.imageURL && tokenDetails?.imageURL?.length > 0 && (
-                <LazyLoad offset={256}>
+                <LazyLoadComponent threshold={256}>
                   <Fade in={true}>
                     <StyledImage
                       src={tokenDetails?.imageURL}
@@ -112,7 +113,7 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
                       loaded={loaded}
                     />
                   </Fade>
-                </LazyLoad>
+                </LazyLoadComponent>
               )}
             </StyledImageWrapper>
           ) : (
@@ -126,7 +127,7 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
 
         <div>
           <StyledBadge>
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row" sx={{ alignItems: 'center' }}>
               {txTypeData.icon}
               <span>{txTypeData.label}</span>
             </Stack>
@@ -141,9 +142,8 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
           {type === 'marketplace_execute_order' ? (
             <Typography
               variant={isMobile ? 'body1' : 'body2'}
-              color="text.secondary"
+              sx={{ color: 'text.secondary', my: 1 }}
               component="p"
-              my={1}
             >
               was purchased by{' '}
               {renderAddressComponent(transaction?.buyer, buyerShortTerraAddress)}
@@ -151,7 +151,7 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
               for{' '}
               <Typography
                 variant={isMobile ? 'h100' : 'h200'}
-                color="text.primary"
+                sx={{ color: 'text.primary' }}
               >
                 {price} ${currency}
               </Typography>{' '}
@@ -162,9 +162,8 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
           ) : (
             <Typography
               variant={isMobile ? 'body1' : 'body2'}
-              color="text.secondary"
+              sx={{ color: 'text.secondary', my: 1 }}
               component="p"
-              my={1}
             >
               {type === 'marketplace_post_buy_order'
                 ? <>
@@ -175,7 +174,7 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
                 : 'was put up for sale for'}{' '}
               <Typography
                 variant={isMobile ? 'h100' : 'h200'}
-                color="text.primary"
+                sx={{ color: 'text.primary' }}
               >
                 {currency === 'LUNA'
                   ? formatLUNADecimal(price)
@@ -183,11 +182,10 @@ const Transaction: React.FC<TransactionsProps> = ({ transaction }) => {
               </Typography>{' '}
             </Typography>
           )}
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             <Typography
               variant={isMobile ? 'body1' : 'body2'}
-              color="text.secondary"
-              sx={{ lineHeight: '14px !important' }}
+              sx={{ color: 'text.secondary', lineHeight: '14px !important' }}
             >
               {formatDistance(new Date(timestamp), new Date(), {
                 addSuffix: true,

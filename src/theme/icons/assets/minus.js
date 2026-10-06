@@ -32,5 +32,4 @@ function SvgMinus(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgMinus);
-export default __webpack_public_path__ + "static/media/minus.fb175101.svg";
 export { ForwardRef as ReactComponent };

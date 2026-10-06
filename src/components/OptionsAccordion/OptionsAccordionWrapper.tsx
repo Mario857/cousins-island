@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyledOptionsAccordionWrapper } from './OptionsAccordionWrapper.styled';
 
-const OptionsAccordionWrapper: React.FC = ({ children }) => {
+const OptionsAccordionWrapper: React.FC<{ children?: React.ReactNode }> = ({
+  children,
+}) => {
   return (
     <StyledOptionsAccordionWrapper>{children}</StyledOptionsAccordionWrapper>
   );

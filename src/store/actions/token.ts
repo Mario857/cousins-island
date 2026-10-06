@@ -128,7 +128,10 @@ export const getCollection =
     });
 
     try {
-      const collection = await blockchain.getNFTCollection(nftContractAddress);
+      // The token page only needs the collection header, not every token's traits.
+      const collection = await blockchain.getNFTCollection(nftContractAddress, {
+        withTraits: false,
+      });
       dispatch({ type: TokenActionTypes.GET_COLLECTION, payload: collection });
     } catch (error) {
       console.log(error);
@@ -211,7 +214,7 @@ export const getTokenDetails =
 
 export const updateTokenDetails = (updatedTokenDetails: NFTTokenDetails) => {
   return {
-    type: TokenActionTypes.GET_USER_TRADING_DETAILS,
+    type: TokenActionTypes.GET_TOKEN_DETAILS,
     payload: updatedTokenDetails,
   };
 };

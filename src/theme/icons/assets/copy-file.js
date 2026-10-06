@@ -32,5 +32,4 @@ function SvgCopyFile(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgCopyFile);
-export default __webpack_public_path__ + "static/media/copy-file.05ee7792.svg";
 export { ForwardRef as ReactComponent };

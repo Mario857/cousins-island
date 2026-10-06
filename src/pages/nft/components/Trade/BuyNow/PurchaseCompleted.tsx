@@ -49,9 +49,7 @@ const PurchaseCompleted: React.FC<PurchaseCompletedProps> = ({
         <Typography
           variant="body3"
           component="p"
-          color="text.secondary"
-          mt={1}
-          mb={1 / 2}
+          sx={{ color: 'text.secondary', mt: 1, mb: 1 / 2 }}
         >
           {collectionTitle}
           <ExclusiveMark
@@ -69,7 +67,7 @@ const PurchaseCompleted: React.FC<PurchaseCompletedProps> = ({
           sx={{ mt: 3 }}
           onClose={() => setTxReceipt(null)}
         >
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             Tx Hash:{' '}
             <a href={txReceipt?.txTerraFinderUrl} target="_blank">
               {shortTxId}

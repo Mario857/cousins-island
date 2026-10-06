@@ -7,7 +7,7 @@ const TermsOfServicePage = () => {
 	return (
 		<Layout>
 			<ArticleContainer>
-				<Box textAlign='center'>
+				<Box sx={{ textAlign: 'center' }}>
 					<Typography variant='h600' component='h1'>
 						TERMS & CONDITIONS
 					</Typography>

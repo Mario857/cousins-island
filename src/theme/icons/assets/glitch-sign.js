@@ -32,5 +32,4 @@ function SvgGlitchSign(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgGlitchSign);
-export default __webpack_public_path__ + "static/media/glitch-sign.8dcd693c.svg";
 export { ForwardRef as ReactComponent };

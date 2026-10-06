@@ -32,5 +32,4 @@ function SvgShoppingBag(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgShoppingBag);
-export default __webpack_public_path__ + "static/media/shopping-bag.f78c47e0.svg";
 export { ForwardRef as ReactComponent };

@@ -8,11 +8,11 @@ import Fade from '@mui/material/Fade';
 const EmptyList = () => {
   return (
     <Fade in={true}>
-      <Box mt={8} textAlign="center">
-        <Typography variant="h600" color="text.primary" component="h3" mb={1}>
+      <Box sx={{ mt: 8, textAlign: 'center' }}>
+        <Typography variant="h600" sx={{ color: 'text.primary', mb: 1 }} component="h3">
           No items found
         </Typography>
-        <Typography variant="h400" color="text.secondary" component="h5" mb={4}>
+        <Typography variant="h400" sx={{ color: 'text.secondary', mb: 4 }} component="h5">
           Come back soon! Or try to browse <br />
           something for you on our marketplace
         </Typography>

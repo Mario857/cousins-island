@@ -27,7 +27,7 @@ export const StyledTimeLeft = styled.div`
   background: rgba(28, 36, 41, 0.72);
   backdrop-filter: blur(4px);
   border-radius: 4px;
-  border: 1px solid ${(props) => props.theme.palette.teal[200]};
+  border: 1px solid ${palette.teal[200]};
   position: absolute;
   bottom: 10px;
   left: 10px;

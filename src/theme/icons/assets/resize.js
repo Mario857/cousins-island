@@ -32,5 +32,4 @@ function SvgResize(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgResize);
-export default __webpack_public_path__ + "static/media/resize.4357b212.svg";
 export { ForwardRef as ReactComponent };

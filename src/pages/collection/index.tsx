@@ -3,7 +3,7 @@ import Heading from 'components/Heading/Heading'
 import * as ROUTES from 'constants/routes'
 import Grid from '@mui/material/Grid'
 import Filters from './components/Filters/Filters'
-import { RouteComponentProps, useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { useCallback, useEffect, useState } from 'react'
 import {
 	NFTCollectionDetails,
@@ -51,14 +51,14 @@ const sortOptions: TokensSortOptions = [
 	},
 ]
 
-interface MatchParams {
+type MatchParams = {
 	collectionAddress: string
 }
 
-const CollectionPage: React.FC<RouteComponentProps<MatchParams>> = props => {
-	const nftContractAddress = props.match.params.collectionAddress
+const CollectionPage = () => {
+	const nftContractAddress = useParams<MatchParams>().collectionAddress!
 	const location = useLocation()
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	const [tokensLoadedFirstTime, setTokensLoadedFirstTime] = useState(false)
 
@@ -97,7 +97,9 @@ const CollectionPage: React.FC<RouteComponentProps<MatchParams>> = props => {
 		traitFilters:
 			parseFilterQuery('traitFilters', location.search) ||
 			initialQuery.traitFilters,
-		sort: parsedQuery?.sort || initialQuery.sort,
+		sort: (typeof parsedQuery?.sort === 'string'
+			? parsedQuery.sort
+			: initialQuery.sort) as TokensQuery['sort'],
 	})
 
 	const getQueryToURL = (updatedQuery: TokensQuery) => {
@@ -146,10 +148,13 @@ const CollectionPage: React.FC<RouteComponentProps<MatchParams>> = props => {
 
 			if (tokens.tokens.length >= TOKENS_PER_PAGE) setHasMore(true)
 
-			history.replace({
-				pathname: location.pathname,
-				search: queryToURL,
-			})
+			navigate(
+				{
+					pathname: location.pathname,
+					search: queryToURL,
+				},
+				{ replace: true }
+			)
 		} catch (error) {
 			console.log(error)
 			setTokens(null)
@@ -322,7 +327,10 @@ const CollectionPage: React.FC<RouteComponentProps<MatchParams>> = props => {
 		const updatedQuery = { ...query, page: 1, traitFilters: {} }
 		const queryToURL = getQueryToURL(updatedQuery)
 
-		history.replace({ pathname: location.pathname, search: queryToURL })
+		navigate(
+			{ pathname: location.pathname, search: queryToURL },
+			{ replace: true }
+		)
 
 		if (!isMobile) window.scrollTo(0, 0)
 
@@ -348,16 +356,15 @@ const CollectionPage: React.FC<RouteComponentProps<MatchParams>> = props => {
 						<Grid
 							container
 							spacing={4}
-							sx={{ mb: 3 }}
+							sx={{ alignItems: 'center', mb: 3 }}
 							direction='row'
-							alignItems='center'
 						>
-							<Grid item xs={12} md={9}>
+							<Grid size={{ xs: 12, md: 9 }}>
 								{nftContractAddress && (
 									<Statistics nftContractAddress={nftContractAddress} />
 								)}
 							</Grid>
-							<Grid item xs={12} md={3}>
+							<Grid size={{ xs: 12, md: 3 }}>
 								<Sorting
 									sortOptions={sortOptions}
 									query={query}
@@ -378,7 +385,7 @@ const CollectionPage: React.FC<RouteComponentProps<MatchParams>> = props => {
 							)}
 						</Box>
 						<Grid container spacing={4}>
-							<Grid item xs={12} md={3}>
+							<Grid size={{ xs: 12, md: 3 }}>
 								<Box
 									sx={{
 										position: { md: 'sticky' },
@@ -413,7 +420,7 @@ const CollectionPage: React.FC<RouteComponentProps<MatchParams>> = props => {
 									)}
 								</Box>
 							</Grid>
-							<Grid item xs={12} md={9}>
+							<Grid size={{ xs: 12, md: 9 }}>
 								<CollectionNFTs
 									collection={{
 										details: collection?.details,
@@ -434,7 +441,7 @@ const CollectionPage: React.FC<RouteComponentProps<MatchParams>> = props => {
 					</>
 				)}
 			</Layout>
-			<Box display={{ xs: 'block', md: 'none' }}>
+			<Box sx={{ display: { xs: 'block', md: 'none' } }}>
 				<ScrollUpButton />
 			</Box>
 		</>

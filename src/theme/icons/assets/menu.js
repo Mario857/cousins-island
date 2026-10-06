@@ -32,5 +32,4 @@ function SvgMenu(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgMenu);
-export default __webpack_public_path__ + "static/media/menu.5673ddf2.svg";
 export { ForwardRef as ReactComponent };

@@ -56,9 +56,18 @@ const collectionsReducer = (
     case CollectionsActionTypes.COLLECTIONS_ERROR:
       return {
         ...state,
+        // Stop the spinner and show empty lists rather than loading forever.
+        collections: state.collections ?? [],
+        newestCollections: state.newestCollections ?? [],
+        oldestCollections: state.oldestCollections ?? [],
+        trendingCollections: state.trendingCollections ?? [],
+        collectionsLoaders: {
+          ...state.collectionsLoaders,
+          [action.payload]: false,
+        },
         collectionsErrors: {
           ...state.collectionsErrors,
-          [action.payload]: false,
+          [action.payload]: true,
         },
       };
     default:

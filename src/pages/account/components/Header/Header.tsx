@@ -11,9 +11,7 @@ const Header: React.FC<HeaderProps> = ({ heading }) => {
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}
-      alignItems={{ md: 'center' }}
-      justifyContent="space-between"
-      sx={{ mb: 4 }}
+      sx={{ alignItems: { md: 'center' }, justifyContent: 'space-between', mb: 4 }}
       spacing={{ xs: 4, md: 0 }}
     >
       <Heading variant="h800" component="h1">

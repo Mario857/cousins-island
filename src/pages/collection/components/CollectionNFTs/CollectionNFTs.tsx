@@ -11,7 +11,7 @@ import {
   StyledLoaderContainer,
 } from './CollectionNFTs.styled';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NotFound from 'components/NotFound/NotFound';
 import * as ROUTES from 'constants/routes';
 import Typography from '@mui/material/Typography';
@@ -45,10 +45,10 @@ const CollectionNFTs: React.FC<CollectionNFTsProps> = ({
 }) => {
   const tokens = collection?.tokens?.data;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const resetQuery = () => {
-    history.push(
+    navigate(
       `${ROUTES.COLLECTIONS}/${collection?.details?.nftContractAddress}`
     );
     setQuery(initialQuery);
@@ -61,7 +61,7 @@ const CollectionNFTs: React.FC<CollectionNFTsProps> = ({
           <LoadingSpinner size="large" color="secondary" />
         </StyledLoaderContainer>
       )}
-      {!loading && (!tokens || (tokens && tokens.length)) <= 0 && (
+      {!loading && Number(!tokens || (tokens && tokens.length)) <= 0 && (
         <NotFound
           heading="No Items Found"
           description="Sorry, we've not been able to find the items you are looking for. Please try again or show all items in this collection."
@@ -75,18 +75,15 @@ const CollectionNFTs: React.FC<CollectionNFTsProps> = ({
           next={() => fetchMoreTokens(query)}
           hasMore={hasMore}
           loader={
-            <Box display="flex" justifyContent="center" width="100%" mt={4}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 4 }}>
               <LoadingSpinner size="large" color="secondary" />
             </Box>
           }
           endMessage={
             <Typography
               variant="body3"
-              color="text.primary"
-              textAlign="center"
               component="p"
-              mt={4}
-              sx={{ width: '100%' }}
+              sx={{ color: 'text.primary', textAlign: 'center', mt: 4, width: '100%' }}
             >
               That's all!
             </Typography>
@@ -96,7 +93,7 @@ const CollectionNFTs: React.FC<CollectionNFTsProps> = ({
           style={{ overflowY: 'hidden' }}
         >
           {tokens.map((token) => (
-            <Grid item xs={12} md={4} key={token.tokenId}>
+            <Grid size={{ xs: 12, md: 4 }} key={token.tokenId}>
               <NFTCard
                 token={token}
                 isExclusive={Boolean(collection?.details?.isExclusive)}

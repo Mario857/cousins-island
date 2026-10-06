@@ -38,7 +38,7 @@ const BidRow: React.FC<BidRowProps> = ({ bid, onCancelClick }) => {
     <StyledBidRow>
       {tokenDetails && (
         <TableCell>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
             {!isVideo ? (
               <TokenMedia
                 src={tokenDetails?.imageURL}
@@ -57,7 +57,7 @@ const BidRow: React.FC<BidRowProps> = ({ bid, onCancelClick }) => {
             <div>
               <TypographyLink
                 variant="body3"
-                color="text.primary"
+                sx={{ color: 'text.primary' }}
                 to={tokenURL}
                 underline="hover"
               >
@@ -65,9 +65,8 @@ const BidRow: React.FC<BidRowProps> = ({ bid, onCancelClick }) => {
               </TypographyLink>
               <Typography
                 variant="body2"
-                color="text.secondary"
+                sx={{ color: 'text.secondary', mt: '4px' }}
                 component="p"
-                mt="4px"
               >
                 {tokenDetails?.collectionTitle}{' '}
                 <ExclusiveMark
@@ -80,22 +79,22 @@ const BidRow: React.FC<BidRowProps> = ({ bid, onCancelClick }) => {
         </TableCell>
       )}
       <TableCell>
-        <Typography variant="body3" color="text.primary" mb="4px" component="p">
+        <Typography variant="body3" sx={{ color: 'text.primary', mb: '4px' }} component="p">
           {formattedDate}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Date
         </Typography>
       </TableCell>
       <TableCell>
-        <Stack direction="row" spacing={1} alignItems="center" mb="4px">
-          <Typography variant="body3" color="text.primary" component="p">
+        <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: '4px' }}>
+          <Typography variant="body3" sx={{ color: 'text.primary' }} component="p">
             {currency === 'LUNA'
               ? formatLUNADecimal(amount || 0)
               : formatUSTDecimal(amount || 0)}
           </Typography>
         </Stack>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Your bid
         </Typography>
       </TableCell>

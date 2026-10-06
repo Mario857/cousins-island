@@ -26,37 +26,32 @@ const TokenDetails = () => {
     <Stack
       direction="row"
       spacing={3}
-      justifyContent="space-between"
-      alignItems="center"
+      sx={{ justifyContent: 'space-between', alignItems: 'center' }}
     >
-      <Box width="114px">
+      <Box sx={{ width: '114px' }}>
         <TokenMedia src={imageURL} alt={name} width="114px" height="114px" />
       </Box>
-      <Stack width="100%" direction="column" justifyContent="space-between">
+      <Stack sx={{ width: '100%', justifyContent: 'space-between' }} direction="column">
         <div>
-          <Typography variant="body3" color="text.secondary">
+          <Typography variant="body3" sx={{ color: 'text.secondary' }}>
             {title}{' '}
             <ExclusiveMark
               isExclusive={Boolean(isExclusive)}
               sx={{ ml: '4px' }}
             />
           </Typography>
-          <Heading variant="h400" component="h4" mb={1}>
+          <Heading variant="h400" component="h4" sx={{ mb: 1 }}>
             {name}
           </Heading>
         </div>
         {sellPriceAmount && sellPriceCurrency && (
           <Stack
             direction={{ xs: 'column', md: 'row' }}
-            alignItems={{ md: 'center' }}
-            justifyContent="space-between"
-            sx={{ mb: 1 }}
+            sx={{ alignItems: { md: 'center' }, justifyContent: 'space-between', mb: 1 }}
           >
             <Typography
               variant="body2"
-              color="text.secondary"
-              display="block"
-              mb={{ xs: 1 / 2, md: 0 }}
+              sx={{ color: 'text.secondary', display: 'block', mb: { xs: 1 / 2, md: 0 } }}
             >
               Price
             </Typography>
@@ -66,14 +61,11 @@ const TokenDetails = () => {
         {highestBid && highestBid?.currency && highestBid?.amount && (
           <Stack
             direction={{ xs: 'column', md: 'row' }}
-            alignItems={{ md: 'center' }}
-            justifyContent="space-between"
+            sx={{ alignItems: { md: 'center' }, justifyContent: 'space-between' }}
           >
             <Typography
               variant="body2"
-              color="text.secondary"
-              display="block"
-              mb={{ xs: 1 / 2, md: 0 }}
+              sx={{ color: 'text.secondary', display: 'block', mb: { xs: 1 / 2, md: 0 } }}
             >
               Highest offer
             </Typography>

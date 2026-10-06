@@ -41,18 +41,26 @@ const notificationsReducer = (
           ...state.notificationsLoaders,
           getNotifications: false,
         },
+        notificationsErrors: {
+          ...state.notificationsErrors,
+          getNotifications: false,
+        },
       };
     case NotificationsActionTypes.NOTIFICATIONS_LOADING:
       return {
         ...state,
         notificationsLoaders: {
           ...state.notificationsLoaders,
-          [action.payload]: false,
+          [action.payload]: true,
         },
       };
     case NotificationsActionTypes.NOTIFICATIONS_ERROR:
       return {
         ...state,
+        notificationsLoaders: {
+          ...state.notificationsLoaders,
+          [action.payload]: false,
+        },
         notificationsErrors: {
           ...state.notificationsErrors,
           [action.payload]: true,

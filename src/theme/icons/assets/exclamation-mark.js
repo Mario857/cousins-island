@@ -32,5 +32,4 @@ function SvgExclamationMark(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgExclamationMark);
-export default __webpack_public_path__ + "static/media/exclamation-mark.e2b58ac4.svg";
 export { ForwardRef as ReactComponent };

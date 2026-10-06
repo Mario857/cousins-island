@@ -22,7 +22,7 @@ export type LatestTransactionsTypeWithAll = LatestTransactionsType | 'all';
 export interface Type {
   label: string;
   value: LatestTransactionsTypeWithAll;
-  icon?: JSX.Element;
+  icon?: React.JSX.Element;
 }
 
 const types: Type[] = [
@@ -147,11 +147,11 @@ const Activity = () => {
       {loading.getTransactions ||
       !transactions ||
       (transactions && transactions.length <= 0) ? (
-        <Box p={3} display="flex" justifyContent="center">
+        <Box sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
           {loading.getTransactions ? (
             <LoadingSpinner color="secondary" size="large" />
           ) : (
-            <Typography variant="h300" color="text.primary" component="h6">
+            <Typography variant="h300" sx={{ color: 'text.primary' }} component="h6">
               No activities found
             </Typography>
           )}
@@ -168,7 +168,7 @@ const Activity = () => {
         ))
       )}
       {(canLoadMore || loadedMore) && !loading.getTransactions && (
-        <Box p={3} display="flex" justifyContent="center">
+        <Box sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
           {canLoadMore && (
             <Button
               variant="contained"
@@ -186,7 +186,7 @@ const Activity = () => {
             </Button>
           )}
           {!canLoadMore && loadedMore && (
-            <Typography variant="h300" color="text.primary" component="h6">
+            <Typography variant="h300" sx={{ color: 'text.primary' }} component="h6">
               That's all!
             </Typography>
           )}

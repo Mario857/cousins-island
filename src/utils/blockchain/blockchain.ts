@@ -1,5 +1,7 @@
-import { BlockchainModule } from './blockchain.interface';
+import type { BlockchainModule } from './blockchain.interface'
 // import blockchainModule from './mock';
-import blockchainModule from './real';
+import blockchainModule from './real'
 
-export default blockchainModule as BlockchainModule;
+const blockchain: BlockchainModule = blockchainModule
+
+export default blockchain

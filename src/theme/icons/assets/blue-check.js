@@ -38,5 +38,4 @@ function SvgBlueCheck(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgBlueCheck);
-export default __webpack_public_path__ + "static/media/blue-check.8cb624be.svg";
 export { ForwardRef as ReactComponent };

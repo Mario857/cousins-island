@@ -7,6 +7,7 @@ import { AngleLeftIcon, AngleRightIcon } from 'theme/icons'
 
 interface CardsSwiperProps {
 	dataLength: number
+	children?: React.ReactNode
 }
 
 const CardsSwiper: React.FC<CardsSwiperProps> = ({ dataLength, children }) => {
@@ -48,7 +49,7 @@ const CardsSwiper: React.FC<CardsSwiperProps> = ({ dataLength, children }) => {
 			>
 				{children}
 			</Swiper>
-			{currentBreakpoint?.slidesPerView &&
+			{typeof currentBreakpoint?.slidesPerView === 'number' &&
 				dataLength > currentBreakpoint.slidesPerView && (
 					<>
 						<StyledButtonWrapper direction='left'>

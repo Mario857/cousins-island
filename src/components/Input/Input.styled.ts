@@ -26,7 +26,7 @@ export const StyledInput = styled(MuiInput)`
     }
   }
 
-  .MuiButton-textPrimary {
+  .MuiButton-text.MuiButton-colorPrimary {
     &:hover {
       color: ${(props) => props.theme.palette.primary.light};
     }

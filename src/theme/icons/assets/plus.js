@@ -32,5 +32,4 @@ function SvgPlus(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgPlus);
-export default __webpack_public_path__ + "static/media/plus.e69beb43.svg";
 export { ForwardRef as ReactComponent };

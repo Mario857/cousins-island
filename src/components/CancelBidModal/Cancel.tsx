@@ -76,7 +76,7 @@ const Cancel: React.FC<CancelProps> = ({
           onErrorClose={() => setErrorMessage('')}
         />
       )}
-      <Stack direction="row" alignItems="center" spacing={2} mt={3}>
+      <Stack direction="row" sx={{ alignItems: 'center', mt: 3 }} spacing={2}>
         <Button
           variant="contained"
           color="tertiary"

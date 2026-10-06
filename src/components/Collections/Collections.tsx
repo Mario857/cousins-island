@@ -31,7 +31,7 @@ const Collections: React.FC<CollectionsProps> = ({
 
   if (!collections || (collections && collections.length <= 0)) {
     return (
-      <Typography variant="body3" color="text.primary">
+      <Typography variant="body3" sx={{ color: 'text.primary' }}>
         We don't have any collections for you at the moment. Please come back
         later.
       </Typography>
@@ -49,10 +49,7 @@ const Collections: React.FC<CollectionsProps> = ({
           (collection) =>
             !collection.isHidden && (
               <Grid
-                item
-                xs={12}
-                md={4}
-                lg={3}
+                size={{ xs: 12, md: 4, lg: 3 }}
                 key={`collection-${collection.title}`}
               >
                 <CollectionCard collection={collection} />

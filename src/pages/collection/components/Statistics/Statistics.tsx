@@ -77,7 +77,7 @@ const Statistics: React.FC<StatisticsParams> = React.memo(
 			<Stack
 				direction={{ xs: 'column', md: 'row' }}
 				spacing={2}
-				mt={{ xs: 4, md: 0 }}
+				sx={{ mt: { xs: 4, md: 0 } }}
 			>
 				{cards
 					.filter(c => c.value || c.value === 0)
@@ -85,19 +85,18 @@ const Statistics: React.FC<StatisticsParams> = React.memo(
 						<Card sx={{ px: 2, py: '12px' }} key={`statistics-card-${index}`}>
 							<Stack
 								direction='row'
-								alignItems='center'
-								justifyContent='space-between'
+								sx={{ alignItems: 'center', justifyContent: 'space-between' }}
 								spacing={1}
 							>
-								<Typography variant='body2' color='text.secondary' noWrap>
+								<Typography variant='body2' sx={{ color: 'text.secondary' }} noWrap>
 									{card.name}
 								</Typography>
-								<Stack direction='row' alignItems='center' spacing={1}>
-									<Typography variant='body2' color='text.primary' noWrap>
+								<Stack direction='row' sx={{ alignItems: 'center' }} spacing={1}>
+									<Typography variant='body2' sx={{ color: 'text.primary' }} noWrap>
 										{formatLUNADecimal(card.value || 0)}
 									</Typography>
 									<LazyLoadImage
-										src='/images/luna.png'
+										src='/images/luna.svg'
 										alt='Terra Luna'
 										width='16px'
 										height='16px'

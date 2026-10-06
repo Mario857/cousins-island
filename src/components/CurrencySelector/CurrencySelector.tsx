@@ -16,23 +16,15 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
   currency,
   handleChange,
 }) => {
+  // Terra 2 has no UST; LUNA is the only currency.
   const currencyOptions = [
     {
       label: '$LUNA',
       value: 'LUNA',
       image: {
-        src: '/images/luna.png',
+        src: '/images/luna.svg',
         width: '14px',
         height: '14px',
-      },
-    },
-    {
-      label: '$UST',
-      value: 'UST',
-      image: {
-        src: '/images/ust.png',
-        width: '16px',
-        height: '16px',
       },
     },
   ];
@@ -40,13 +32,13 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({
   return (
     <>
       {label && (
-        <Typography variant="h300" component="label" color="text.primary">
+        <Typography variant="h300" component="label" sx={{ color: 'text.primary' }}>
           {label}
         </Typography>
       )}
-      <Grid container columnSpacing={3} mb={3} mt={1}>
+      <Grid container columnSpacing={3} sx={{ mb: 3, mt: 1 }}>
         {currencyOptions.map((option, index) => (
-          <Grid item xs={6} key={`currency-option-${index}`}>
+          <Grid size={12} key={`currency-option-${index}`}>
             <Chip
               label={option.label}
               size="medium"

@@ -32,5 +32,4 @@ function SvgGlobe(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgGlobe);
-export default __webpack_public_path__ + "static/media/globe.47d705df.svg";
 export { ForwardRef as ReactComponent };

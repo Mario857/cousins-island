@@ -32,5 +32,4 @@ function SvgList(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgList);
-export default __webpack_public_path__ + "static/media/list.2ca6e439.svg";
 export { ForwardRef as ReactComponent };

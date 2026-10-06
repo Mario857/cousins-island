@@ -9,7 +9,7 @@ import CollectionLogo from 'components/CollectionLogo/CollectionLogo';
 import * as ROUTES from 'constants/routes';
 import Stack from '@mui/material/Stack';
 import { NFTCollectionDetails } from 'utils/blockchain/blockchain.interface';
-import blockchain from 'utils/blockchain/real/luart-api';
+import blockchain from 'utils/blockchain/blockchain';
 import { Link } from 'react-router-dom';
 import CardMedia from '@mui/material/CardMedia';
 import Fade from '@mui/material/Fade';
@@ -86,12 +86,12 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
               />
             </StyledLogoContainer>
 
-            <Stack direction="row" alignItems="center" mt={4} mb={2}>
+            <Stack direction="row" sx={{ alignItems: 'center', mt: 4, mb: 2 }}>
               <Tooltip title={title.length > 17 ? title : ''} arrow>
                 <Typography
                   variant="h400"
                   component="h5"
-                  color="text.primary"
+                  sx={{ color: 'text.primary' }}
                   noWrap
                 >
                   {title}
@@ -103,17 +103,15 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
             {details.map((detail, index) => (
               <Stack
                 direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                sx={{ mb: index !== details.length - 1 ? 1 / 2 : 0 }}
+                sx={{ alignItems: 'center', justifyContent: 'space-between', mb: index !== details.length - 1 ? 1 / 2 : 0 }}
                 key={`collection-${title}-detail-${index}`}
               >
-                <Typography variant="body2" color="text.primary">
+                <Typography variant="body2" sx={{ color: 'text.primary' }}>
                   {detail.label}
                 </Typography>
                 <Typography
                   variant="h200"
-                  color="text.primary"
+                  sx={{ color: 'text.primary' }}
                   component="h6"
                   noWrap
                 >

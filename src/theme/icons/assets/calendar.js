@@ -33,5 +33,4 @@ function SvgCalendar(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgCalendar);
-export default __webpack_public_path__ + "static/media/calendar.e3cd5aea.svg";
 export { ForwardRef as ReactComponent };

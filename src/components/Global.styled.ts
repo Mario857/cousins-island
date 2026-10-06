@@ -153,7 +153,7 @@ const GlobalStyles = createGlobalStyle`
     margin-left: -32px;
     box-sizing: border-box;
 
-    .MuiGrid-item {
+    .MuiGrid-root {
       @media screen and (min-width: 992px) {
         flex-basis: 33.333333%;
         flex-grow: 0;

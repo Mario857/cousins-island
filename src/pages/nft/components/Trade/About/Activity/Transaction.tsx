@@ -37,9 +37,7 @@ const Transaction: React.FC<TransactionProps> = ({ types, transaction }) => {
     <StyledTransaction>
       <Stack
         direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb={2}
+        sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 2 }}
       >
         {typeDetails && (
           <StyledLabel>
@@ -47,23 +45,21 @@ const Transaction: React.FC<TransactionProps> = ({ types, transaction }) => {
           </StyledLabel>
         )}
         {price && currency && (
-          <Stack direction="row" alignItems="center">
+          <Stack direction="row" sx={{ alignItems: 'center' }}>
             <LazyLoadImage
-              src={currency === 'LUNA' ? '/images/luna.png' : '/images/ust.png'}
+              src={currency === 'LUNA' ? '/images/luna.svg' : '/images/ust.png'}
               alt={currency}
               width="16px"
               height="16px"
             />
             <Typography
               variant="h300"
-              color="text.primary"
+              sx={{ color: 'text.primary', ml: 1, mr: 1 / 2 }}
               component="h6"
-              ml={1}
-              mr={1 / 2}
             >
               {formatDecimal(price)}
             </Typography>
-            <Typography variant="body2" color="text.primary">
+            <Typography variant="body2" sx={{ color: 'text.primary' }}>
               ${currency}
             </Typography>
           </Stack>
@@ -71,15 +67,14 @@ const Transaction: React.FC<TransactionProps> = ({ types, transaction }) => {
       </Stack>
       <Stack
         direction={{ xs: 'column', md: 'row' }}
-        alignItems={{ md: 'center' }}
+        sx={{ alignItems: { md: 'center' } }}
         spacing={buyer && seller ? 1 : 0}
         divider={
           buyer &&
           seller && (
             <Typography
               variant="body2"
-              color="text.secondary"
-              display={{ xs: 'none', md: 'block' }}
+              sx={{ color: 'text.secondary', display: { xs: 'none', md: 'block' } }}
             >
               •
             </Typography>
@@ -88,63 +83,61 @@ const Transaction: React.FC<TransactionProps> = ({ types, transaction }) => {
       >
         <Stack
           direction="row"
-          alignItems="center"
+          sx={{ alignItems: 'center' }}
           spacing={1}
           divider={
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               •
             </Typography>
           }
         >
           {seller && buyer && (
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <Typography variant="body2" color="text.primary">
+            <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1}>
+              <Typography variant="body2" sx={{ color: 'text.primary' }}>
                 from
               </Typography>
               <TypographyLink
                 variant="h200"
-                color="text.primary"
                 href={sellerTerraFinderUrl}
                 target="_blank"
                 rel="noreferrer"
                 underline="hover"
-                sx={{ fontFamily: 'Inter, sans-serif' }}
+                sx={{ color: 'text.primary', fontFamily: 'Inter, sans-serif' }}
               >
                 {type === 'marketplace_post_buy_order' ? shortBuyerAddress : shortSellerAddress}
               </TypographyLink>
             </Stack>
           )}
           {buyer && seller && (
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <Typography variant="body2" color="text.primary">
+            <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1}>
+              <Typography variant="body2" sx={{ color: 'text.primary' }}>
                 to
               </Typography>
               <TypographyLink
                 variant="h200"
-                color="text.primary"
                 href={buyerTerraFinderUrl}
                 target="_blank"
                 rel="noreferrer"
                 underline="hover"
-                sx={{ fontFamily: 'Inter, sans-serif' }}
+                sx={{ color: 'text.primary', fontFamily: 'Inter, sans-serif' }}
               >
                 {type === 'marketplace_post_buy_order' ? shortSellerAddress : shortBuyerAddress}
               </TypographyLink>
             </Stack>
           )}
         </Stack>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography variant="body2" color="text.primary">
+        <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1}>
+          <Typography variant="body2" sx={{ color: 'text.primary' }}>
             {formatDistance(new Date(timestamp), new Date(), {
               addSuffix: true,
             })}
           </Typography>
           <TypographyLink
-            color="text.primary"
             href={terraFinderUrl}
             target="_blank"
             rel="noreferrer"
             sx={{
+              color: 'text.primary',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

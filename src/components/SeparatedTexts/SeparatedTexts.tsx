@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import { SxProps } from '@mui/system';
 
 interface SeparatedTexts {
-  left?: string | JSX.Element | number;
-  right?: string | JSX.Element | number;
+  left?: string | React.JSX.Element | number;
+  right?: string | React.JSX.Element | number;
   sx?: SxProps;
   color?: TypographyProps['color'];
 }
@@ -18,11 +18,11 @@ const SeparatedTexts: React.FC<SeparatedTexts> = ({
 }) => {
   return (
     <Box sx={sx}>
-      <Stack direction="row" justifyContent="space-between">
-        <Typography variant="body2" color={color}>
+      <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+        <Typography variant="body2" sx={{ color }}>
           {left}
         </Typography>
-        <Typography variant="body2" color={color}>
+        <Typography variant="body2" sx={{ color }}>
           {right}
         </Typography>
       </Stack>

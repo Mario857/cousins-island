@@ -36,10 +36,7 @@ const ScrollUpButton = () => {
 
   return (
     <Box
-      position="fixed"
-      bottom={100}
-      right={32}
-      display={visible ? 'block' : 'none'}
+      sx={{ position: 'fixed', bottom: 100, right: 32, display: visible ? 'block' : 'none' }}
     >
       <IconButton type="button" onClick={handleClick}>
         <ArrowUpIcon />

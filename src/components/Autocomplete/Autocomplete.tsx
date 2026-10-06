@@ -14,9 +14,12 @@ const Autocomplete: React.FC<any> = ({ ...rest }) => {
         <StyledTextField
           {...params}
           placeholder="Search collection"
-          InputProps={{
-            ...params.InputProps,
-            startAdornment: <SearchIcon fontSize="small" sx={{ ml: 2 }} />,
+          slotProps={{
+            ...params.slotProps,
+            input: {
+              ...params.slotProps.input,
+              startAdornment: <SearchIcon fontSize="small" sx={{ ml: 2 }} />,
+            },
           }}
         />
       )}

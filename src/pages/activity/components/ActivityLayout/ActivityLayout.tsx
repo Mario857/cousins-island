@@ -4,11 +4,13 @@ import * as ROUTES from 'constants/routes';
 import Heading from 'components/Heading/Heading';
 import Tabs from 'components/Tabs/Tabs';
 import Tab from 'components/Tabs/Tab';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useWallet, WalletStatus } from 'wallet';
 
-const ActivityLayout: React.FC = ({ children }) => {
-  const history = useHistory();
+const ActivityLayout: React.FC<{ children?: React.ReactNode }> = ({
+  children,
+}) => {
+  const navigate = useNavigate();
   const location = useLocation();
 
   const breadcrumbs = [
@@ -36,12 +38,12 @@ const ActivityLayout: React.FC = ({ children }) => {
   ];
 
   const handleChange = (event: React.SyntheticEvent, value: string) => {
-    history.push(value);
+    navigate(value);
   };
 
   return (
     <Layout breadcrumbs={breadcrumbs}>
-      <Heading variant="h800" component="h1" mb={3}>
+      <Heading variant="h800" component="h1" sx={{ mb: 3 }}>
         Activity
       </Heading>
       <Tabs
@@ -50,10 +52,12 @@ const ActivityLayout: React.FC = ({ children }) => {
         indicatorColor="secondary"
         textColor="inherit"
         variant="fullWidth"
-        TabIndicatorProps={{
-          style: {
-            background: 'white',
-            height: 1,
+        slotProps={{
+          indicator: {
+            style: {
+              background: 'white',
+              height: 1,
+            },
           },
         }}
         sx={{ mb: 4 }}

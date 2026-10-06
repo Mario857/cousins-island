@@ -32,5 +32,4 @@ function SvgAngleDown(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgAngleDown);
-export default __webpack_public_path__ + "static/media/angle-down.cd0c93f7.svg";
 export { ForwardRef as ReactComponent };

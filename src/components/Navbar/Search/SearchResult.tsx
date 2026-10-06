@@ -7,7 +7,7 @@ import { NFTCollectionDetails } from 'utils/blockchain/blockchain.interface';
 import { formatDecimal } from 'utils/formatNumbers';
 import * as ROUTES from 'constants/routes';
 import Box from '@mui/material/Box';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AngleRightIcon } from 'theme/icons';
 
 interface SearchResultProps {
@@ -22,30 +22,29 @@ const SearchResult: React.FC<SearchResultProps> = ({
   const { title, imageURL, totalTokensCount, isExclusive, nftContractAddress } =
     result;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     const collectionURL = `${ROUTES.COLLECTIONS}/${nftContractAddress}`;
-    history.push(collectionURL);
+    navigate(collectionURL);
 
     onCloseOnMobile();
   };
 
   return (
     <StyledSearchResult onClick={handleClick}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
+      <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
         <Stack
           direction="row"
           spacing={1}
-          alignItems="center"
-          sx={{ minWidth: { xs: '80%', md: '100%' } }}
+          sx={{ alignItems: 'center', minWidth: { xs: '80%', md: '100%' } }}
         >
           <StyledLogo src={imageURL} alt={title} />
-          <Box width="100%">
-            <Stack direction="row" alignItems="center" sx={{ width: '80%' }}>
+          <Box sx={{ width: '100%' }}>
+            <Stack direction="row" sx={{ alignItems: 'center', width: '80%' }}>
               <Typography
                 variant="h200"
-                color="text.primary"
+                sx={{ color: 'text.primary' }}
                 component="h6"
                 noWrap
               >
@@ -56,7 +55,7 @@ const SearchResult: React.FC<SearchResultProps> = ({
                 sx={{ ml: '4px' }}
               />
             </Stack>
-            <Typography variant="body1" color="text.secondary">
+            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
               {formatDecimal(totalTokensCount, 0)} items
             </Typography>
           </Box>

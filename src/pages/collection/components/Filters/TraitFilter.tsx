@@ -27,12 +27,11 @@ const TraitFilter: React.FC<TraitFilterProps> = ({
         handleToggle(name, trait.value, isChecked);
       }}
     >
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography
           variant="body2"
-          color="text.primary"
           component="p"
-          sx={{ wordBreak: 'break-word', maxWidth: '85%' }}
+          sx={{ color: 'text.primary', wordBreak: 'break-word', maxWidth: '85%' }}
         >
           {trait.value === '' || trait.value === null ? 'None' : trait.value}{' '}
           {trait.rarity && trait.rarity > 0 ? `(${trait.rarity}%)` : ''}

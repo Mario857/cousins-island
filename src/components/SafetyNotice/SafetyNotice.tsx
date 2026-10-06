@@ -40,8 +40,7 @@ const SafetyNotice = () => {
           <>
             <Typography
               variant="body4"
-              color="text.primary"
-              mb={4}
+              sx={{ color: 'text.primary', mb: 4 }}
               component="p"
             >
               The Cousin Island platform is currently in beta, our Developers and
@@ -49,13 +48,13 @@ const SafetyNotice = () => {
               can be viewed here. By proceeding, you are accepting our terms of
               use and understand the risks.
             </Typography>
-            <Stack direction="row" spacing={1} alignItems="center">
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
               <Checkbox checked={checked} onChange={handleChange} />
               <Typography
                 variant="body3"
-                color="text.primary"
                 component="p"
                 sx={{
+                  color: 'text.primary',
                   cursor: 'pointer',
                 }}
               >

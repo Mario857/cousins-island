@@ -4,7 +4,7 @@ import {
   StyledImagePlaceholder,
   StyledImage,
 } from './TokenMedia.styled';
-import LazyLoad from 'react-lazyload';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import Fade from '@mui/material/Fade';
 
 interface TokenMediaProps {
@@ -30,7 +30,7 @@ const TokenMedia: React.FC<TokenMediaProps> = ({
     <StyledImageWrapper height={height} width={width} borderRadius={borderRadius}>
       <StyledImagePlaceholder borderRadius={borderRadius} />
       {src && src.length > 0 && (
-        <LazyLoad offset={offset}>
+        <LazyLoadComponent threshold={offset}>
           <Fade in={true}>
             <StyledImage
               src={src}
@@ -40,7 +40,7 @@ const TokenMedia: React.FC<TokenMediaProps> = ({
               onError={() => setLoaded(true)}
             />
           </Fade>
-        </LazyLoad>
+        </LazyLoadComponent>
       )}
     </StyledImageWrapper>
   );

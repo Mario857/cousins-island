@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import ExclusiveMark from 'components/ExclusiveMark/ExclusiveMark';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import blockchain from 'utils/blockchain/real/luart-api';
+import blockchain from 'utils/blockchain/blockchain';
 import Alert from 'components/Alert/Alert';
 import { getLunaPrice } from 'store/actions/statistics';
 
@@ -111,7 +111,7 @@ const CompletingTransaction: React.FC<CompletingTransactionProps> = ({
         <>
           {formattedPrice}
           <LazyLoadImage
-            src={currency === 'LUNA' ? '/images/luna.png' : '/images/ust.png'}
+            src={currency === 'LUNA' ? '/images/luna.svg' : '/images/ust.png'}
             alt={currency}
             height="16px"
             width="16px"
@@ -148,7 +148,7 @@ const CompletingTransaction: React.FC<CompletingTransactionProps> = ({
           sx={{ mb: index !== details.length - 1 ? 1 : 0 }}
         />
       ))}
-      <Box mt={3}>
+      <Box sx={{ mt: 3 }}>
         {belowFloor && (
           <Alert
             severity="warning"
@@ -158,10 +158,10 @@ const CompletingTransaction: React.FC<CompletingTransactionProps> = ({
         )}
         <Grid
           container
-          alignItems={{ md: 'center' }}
+          sx={{ alignItems: { md: 'center' } }}
           spacing={{ xs: 2, md: 4 }}
         >
-          <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
+          <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 2, md: 1 } }}>
             <Button
               variant="contained"
               color="tertiary"
@@ -175,7 +175,7 @@ const CompletingTransaction: React.FC<CompletingTransactionProps> = ({
               Cancel
             </Button>
           </Grid>
-          <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
+          <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
             <Button
               variant="contained"
               color="primary"

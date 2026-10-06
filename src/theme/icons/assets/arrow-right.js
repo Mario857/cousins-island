@@ -32,5 +32,4 @@ function SvgArrowRight(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgArrowRight);
-export default __webpack_public_path__ + "static/media/arrow-right.13a99960.svg";
 export { ForwardRef as ReactComponent };

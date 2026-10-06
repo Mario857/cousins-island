@@ -29,8 +29,8 @@ const CompletingTransaction: React.FC<CompletingTransactionProps> = ({
 
   return (
     <>
-      <Stack direction="row" alignItems="center" spacing={2}>
-        <Box pl={1} pt="4px">
+      <Stack direction="row" sx={{ alignItems: 'center' }} spacing={2}>
+        <Box sx={{ pl: 1, pt: '4px' }}>
           {loading ? (
             <LoadingSpinner size="large" color="secondary" />
           ) : (
@@ -40,13 +40,12 @@ const CompletingTransaction: React.FC<CompletingTransactionProps> = ({
         <div>
           <Typography
             variant="h400"
-            color="text.primary"
+            sx={{ color: 'text.primary', mb: 1 / 2 }}
             component="h5"
-            mb={1 / 2}
           >
             Purchase
           </Typography>
-          <Typography variant="body3" color="text.primary" component="p">
+          <Typography variant="body3" sx={{ color: 'text.primary' }} component="p">
             Confirm the transaction on your wallet
           </Typography>
         </div>

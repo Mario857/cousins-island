@@ -14,7 +14,7 @@ import blockchain from 'utils/blockchain/blockchain'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from 'store/store'
 import { getBalance, updateOwnedTokens } from 'store/actions/account'
-import { useWallet } from '@terra-money/wallet-provider'
+import { useWallet } from 'wallet'
 import { updateUserTradingDetails } from 'store/actions/token'
 
 export type CheckoutStep = 'checkout' | 'completing' | 'completed'
@@ -172,9 +172,8 @@ const BuyNow: React.FC<BuyNowProps> = ({ userTradeStatus }) => {
 					description: (
 						<Typography
 							variant='h200'
-							color='text.primary'
+							sx={{ color: 'text.primary', display: 'inline-block' }}
 							component='h6'
-							display='inline-block'
 						>
 							You are about to purchase {tokenName}
 						</Typography>

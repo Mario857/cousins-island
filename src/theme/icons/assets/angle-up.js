@@ -32,5 +32,4 @@ function SvgAngleUp(_ref, svgRef) {
 }
 
 var ForwardRef = /*#__PURE__*/React.forwardRef(SvgAngleUp);
-export default __webpack_public_path__ + "static/media/angle-up.51c517e1.svg";
 export { ForwardRef as ReactComponent };

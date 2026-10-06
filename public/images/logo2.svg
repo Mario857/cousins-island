@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <title>Cousin Island</title>
+  <circle cx="16" cy="16" r="15" fill="#2DD4BF" fill-opacity=".15" stroke="#2DD4BF" stroke-width="2"/>
+  <path d="M6 21c3-2 6-2 10 0s7 2 10 0" stroke="#2DD4BF" stroke-width="2" stroke-linecap="round"/>
+  <path d="M16 20V11m0 0c-2-3-5-3-7-2m7 2c2-3 5-3 7-2m-7 0c0-3 1-5 3-6" stroke="#F8FAFC" stroke-width="2" stroke-linecap="round"/>
+</svg>

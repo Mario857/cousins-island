@@ -71,13 +71,13 @@ const CompletingTransaction: React.FC<CompletingTransactionProps> = ({
           sx={{ mb: index !== details.length - 1 ? 1 : 0 }}
         />
       ))}
-      <Box mt={4}>
+      <Box sx={{ mt: 4 }}>
         <Grid
           container
-          alignItems={{ md: 'center' }}
+          sx={{ alignItems: { md: 'center' } }}
           spacing={{ xs: 2, md: 4 }}
         >
-          <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
+          <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 2, md: 1 } }}>
             <Button
               variant="contained"
               color="tertiary"
@@ -89,7 +89,7 @@ const CompletingTransaction: React.FC<CompletingTransactionProps> = ({
               No
             </Button>
           </Grid>
-          <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
+          <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
             <Button
               variant="contained"
               color="primary"
