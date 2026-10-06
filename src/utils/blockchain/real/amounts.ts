@@ -8,11 +8,16 @@ export const LUNA_DENOM = 'uluna'
 
 const MICRO = new Big(10).pow(LUNA_DECIMALS)
 
-/** User-facing LUNA amount -> integer uluna string (rounded down, never negative). */
+/**
+ * User-facing LUNA amount -> integer uluna string (never negative).
+ * Numbers are first cut to 12 significant digits so float noise from
+ * arithmetic (0.3 - 0.1 = 0.19999999999999998) doesn't lose 1 uluna;
+ * anything beyond 6 decimals is then dropped.
+ */
 export function toUluna(amount: number | string): string {
 	let value: Big
 	try {
-		value = new Big(amount)
+		value = new Big(typeof amount === 'number' ? Number(amount.toPrecision(12)) : amount)
 	} catch {
 		throw new Error(`Invalid amount: ${amount}`)
 	}

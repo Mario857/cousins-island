@@ -73,3 +73,15 @@ describe('currency helpers', () => {
 		expect(lunaCoins(3.25)).toEqual([{ denom: 'uluna', amount: '3250000' }])
 	})
 })
+
+describe('toUluna float noise', () => {
+	it('does not lose 1 uluna on computed amounts', () => {
+		expect(toUluna(0.3 - 0.1)).toBe('200000')
+		expect(toUluna(1.15 * 3)).toBe('3450000')
+		expect(toUluna(4.35)).toBe('4350000')
+	})
+	it('still drops digits beyond 6 decimals', () => {
+		expect(toUluna('1.2345678')).toBe('1234567')
+		expect(toUluna(0.0000001)).toBe('0')
+	})
+})

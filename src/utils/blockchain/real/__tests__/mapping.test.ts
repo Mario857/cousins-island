@@ -42,6 +42,7 @@ function listing(id: string, priceLuna: number, seq: number, listedAt = 1_700_00
 		price: String(priceLuna * 1_000_000),
 		listed_at: listedAt,
 		seq,
+		terms: { fee_bps: 250, royalty_bps: 0, royalty_recipient: null },
 	}
 }
 

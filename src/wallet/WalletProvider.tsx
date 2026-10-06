@@ -74,15 +74,36 @@ function writeLastWallet(id: string | null) {
 	}
 }
 
+function isUnknownChainError(e: unknown): boolean {
+	const message = e instanceof Error ? e.message : String(e)
+	return /no chain info|there is no chain|unknown chain|not supported|chain.*not found/i.test(message)
+}
+
 async function enableChain(provider: KeplrLike, network: NetworkConfig) {
 	try {
 		await provider.enable(network.chainId)
 	} catch (e) {
-		// Keplr doesn't know the testnet out of the box; suggest it, then retry.
-		if (!provider.experimentalSuggestChain) throw e
+		// Keplr doesn't know the testnet out of the box: suggest it, then retry.
+		// Any other error (e.g. the user said no) is passed on as is.
+		if (!provider.experimentalSuggestChain || !isUnknownChainError(e)) throw e
 		await provider.experimentalSuggestChain(keplrChainInfo(network))
 		await provider.enable(network.chainId)
 	}
+}
+
+/** Connects the signing client to the first RPC that answers. */
+async function connectSigningClient(network: NetworkConfig, signer: Parameters<typeof SigningCosmWasmClient.connectWithSigner>[1]) {
+	let lastError: unknown
+	for (const rpc of network.rpc) {
+		try {
+			return await SigningCosmWasmClient.connectWithSigner(rpc, signer, {
+				gasPrice: GasPrice.fromString(network.gasPrice),
+			})
+		} catch (e) {
+			lastError = e
+		}
+	}
+	throw lastError instanceof Error ? lastError : new Error('No Terra RPC node is reachable right now')
 }
 
 export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -188,11 +209,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 					if (!provider) return Promise.reject(new Error('Wallet is no longer available'))
 					const client = provider
 						.getOfflineSignerAuto(network.chainId)
-						.then(signer =>
-							SigningCosmWasmClient.connectWithSigner(network.rpc[0], signer, {
-								gasPrice: GasPrice.fromString(network.gasPrice),
-							})
-						)
+						.then(signer => connectSigningClient(network, signer))
 					client.catch(() => {
 						if (clientRef.current?.key === key) clientRef.current = null
 					})

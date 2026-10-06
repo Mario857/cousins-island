@@ -104,15 +104,13 @@ const BuyNow: React.FC<BuyNowProps> = ({ userTradeStatus }) => {
 				setTxReceipt(txReceipt)
 				setErrorMessage('')
 			} catch (error) {
-				// @ts-ignore:next-line
-				const errorData = { error }
-				// @ts-ignore:next-line
-				const errorMessage = errorData.error.response.data.error
-				// @ts-ignore:next-line
-				console.log(errorMessage)
-				errorMessage.includes('insufficient funds')
-					? setErrorMessage(`You don't have enough funds`)
-					: setErrorMessage('There was an error while processing the transaction.')
+				console.log(error)
+				const message = error instanceof Error ? error.message : String(error)
+				setErrorMessage(
+					/insufficient funds/i.test(message)
+						? `You don't have enough funds`
+						: message || 'There was an error while processing the transaction.'
+				)
 			}
 		}
 

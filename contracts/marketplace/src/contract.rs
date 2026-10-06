@@ -6,14 +6,14 @@ use cosmwasm_std::{
 };
 use cw2::{get_contract_version, set_contract_version};
 use cw721::receiver::Cw721ReceiveMsg;
-use cw_utils::must_pay;
+use cw_utils::{must_pay, nonpayable};
 use serde::Serialize;
 
 use crate::error::ContractError;
 use crate::msg::{CollectionInput, ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg, ReceiveNftMsg};
 use crate::query;
 use crate::state::{
-    Activity, ActivityKind, Bid, Collection, Config, Listing, ACTIVITY, ACTIVITY_BY_COLLECTION,
+    Activity, ActivityKind, Bid, Collection, Config, Listing, SaleTerms, ACTIVITY, ACTIVITY_BY_COLLECTION,
     ACTIVITY_BY_TOKEN, ACTIVITY_BY_USER, ACTIVITY_SEQ, BIDS, BIDS_BY_BIDDER, BIDS_BY_TOKEN,
     BID_LOOKUP, BID_SEQ, COLLECTIONS, CONFIG, HOURLY_VOLUME, LISTINGS, LISTINGS_BY_PRICE,
     LISTINGS_BY_SELLER, LISTINGS_BY_SEQ, LISTING_SEQ, STATS,
@@ -74,6 +74,11 @@ pub fn execute(
     info: MessageInfo,
     msg: ExecuteMsg,
 ) -> Result<Response, ContractError> {
+    // Only Buy and PlaceBid take funds; reject coins sent with anything else
+    // so they can't end up stuck in the contract.
+    if !matches!(msg, ExecuteMsg::Buy { .. } | ExecuteMsg::PlaceBid { .. }) {
+        nonpayable(&info)?;
+    }
     match msg {
         ExecuteMsg::ReceiveNft(receive) => execute_receive_nft(deps, env, info, receive),
         ExecuteMsg::UpdatePrice {
@@ -163,6 +168,7 @@ fn execute_receive_nft(
                 price,
                 listed_at: env.block.time.seconds(),
                 seq,
+                terms: SaleTerms::current(&config, &collection),
             };
             save_listing(deps.storage, &listing)?;
             STATS.update(deps.storage, &collection_addr, |s| -> StdResult<_> {
@@ -200,7 +206,7 @@ fn execute_receive_nft(
                 deps.storage,
                 &env,
                 &config,
-                &collection,
+                &SaleTerms::current(&config, &collection),
                 &collection_addr,
                 &token_id,
                 &owner,
@@ -314,7 +320,7 @@ fn execute_buy(
     let config = CONFIG.load(deps.storage)?;
     ensure_not_paused(&config)?;
     let collection_addr = deps.api.addr_validate(&collection)?;
-    let collection_info = load_collection(deps.storage, &collection_addr, true)?;
+    load_collection(deps.storage, &collection_addr, true)?;
     let listing = load_listing(deps.storage, &collection_addr, &token_id)?;
     let buyer = info.sender.clone();
     if listing.seller == buyer {
@@ -333,7 +339,7 @@ fn execute_buy(
         deps.storage,
         &env,
         &config,
-        &collection_info,
+        &listing.terms,
         &collection_addr,
         &token_id,
         &listing.seller,
@@ -483,7 +489,7 @@ fn execute_accept_bid(
     let config = CONFIG.load(deps.storage)?;
     ensure_not_paused(&config)?;
     let bid = load_bid(deps.storage, bid_id)?;
-    let collection_info = load_collection(deps.storage, &bid.collection, true)?;
+    load_collection(deps.storage, &bid.collection, true)?;
     let listing = load_listing(deps.storage, &bid.collection, &bid.token_id)?;
     if listing.seller != info.sender {
         return Err(ContractError::NotSeller);
@@ -498,7 +504,7 @@ fn execute_accept_bid(
         deps.storage,
         &env,
         &config,
-        &collection_info,
+        &listing.terms,
         &bid.collection,
         &bid.token_id,
         &listing.seller,
@@ -726,16 +732,16 @@ fn settle_sale(
     storage: &mut dyn Storage,
     env: &Env,
     config: &Config,
-    collection: &Collection,
+    terms: &SaleTerms,
     collection_addr: &Addr,
     token_id: &str,
     seller: &Addr,
     buyer: &Addr,
     price: Uint128,
 ) -> Result<Vec<CosmosMsg>, ContractError> {
-    let fee = price.multiply_ratio(config.fee_bps as u128, BPS_DENOMINATOR);
-    let royalty = match &collection.royalty_recipient {
-        Some(_) => price.multiply_ratio(collection.royalty_bps as u128, BPS_DENOMINATOR),
+    let fee = price.multiply_ratio(terms.fee_bps as u128, BPS_DENOMINATOR);
+    let royalty = match &terms.royalty_recipient {
+        Some(_) => price.multiply_ratio(terms.royalty_bps as u128, BPS_DENOMINATOR),
         None => Uint128::zero(),
     };
     let seller_amount = price.checked_sub(fee)?.checked_sub(royalty)?;
@@ -747,7 +753,7 @@ fn settle_sale(
     if !fee.is_zero() {
         msgs.push(bank_send(&config.fee_recipient, fee, &config.denom));
     }
-    if let (Some(recipient), false) = (&collection.royalty_recipient, royalty.is_zero()) {
+    if let (Some(recipient), false) = (&terms.royalty_recipient, royalty.is_zero()) {
         msgs.push(bank_send(recipient, royalty, &config.denom));
     }
 

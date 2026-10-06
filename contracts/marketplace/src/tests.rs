@@ -823,3 +823,52 @@ fn test_collection_accepts_on_chain_svg_metadata() {
     s.buy(&bob, "100", 1_000).unwrap();
     assert_eq!(s.owner_of("100"), bob);
 }
+
+#[test]
+fn listing_keeps_the_fees_it_was_listed_with() {
+    let mut s = Suite::new();
+    let (alice, bob, admin) = (s.alice.clone(), s.bob.clone(), s.admin.clone());
+    s.list(&alice, "1", 1_000_000).unwrap();
+    // Admin raises the fee and royalty after Alice listed.
+    let msg = ExecuteMsg::UpdateConfig { admin: None, fee_bps: Some(1_000), fee_recipient: None, paused: None };
+    s.exec(&admin, msg, 0).unwrap();
+    let nft = s.nft.to_string();
+    let msg = ExecuteMsg::SetCollection {
+        address: nft,
+        collection: CollectionInput {
+            name: "Cousins".into(), description: None, image: None, banner: None, website: None,
+            twitter: None, discord: None, royalty_bps: 1_500, royalty_recipient: Some(admin.to_string()), enabled: true,
+        },
+    };
+    s.exec(&admin, msg, 0).unwrap();
+    s.buy(&bob, "1", 1_000_000).unwrap();
+    // Still 2.5% fee + 4.5% royalty to the original recipient: Alice gets 93%.
+    assert_eq!(s.balance(&alice), START_BALANCE + 930_000);
+    assert_eq!(s.balance(&s.artist), 45_000);
+    assert_eq!(s.balance(&s.fee_recipient), 25_000);
+
+    // A new listing uses the new terms.
+    s.list(&alice, "2", 1_000_000).unwrap();
+    s.buy(&bob, "2", 1_000_000).unwrap();
+    assert_eq!(s.balance(&alice), START_BALANCE + 930_000 + 750_000);
+}
+
+#[test]
+fn stray_funds_are_rejected() {
+    let mut s = Suite::new();
+    let (alice, bob) = (s.alice.clone(), s.bob.clone());
+    s.list(&alice, "1", 1_000).unwrap();
+    s.bid(&bob, "2", 500).unwrap();
+    let nft = s.nft.to_string();
+    let cases = vec![
+        ExecuteMsg::CancelListing { collection: nft.clone(), token_id: "1".into() },
+        ExecuteMsg::UpdatePrice { collection: nft.clone(), token_id: "1".into(), price: 5u128.into() },
+        ExecuteMsg::CancelBid { bid_id: 1 },
+        ExecuteMsg::AcceptBid { bid_id: 1 },
+    ];
+    for msg in cases {
+        let who = if matches!(msg, ExecuteMsg::CancelBid { .. }) { bob.clone() } else { alice.clone() };
+        assert!(matches!(err(s.exec(&who, msg, 7)), ContractError::Payment(_)));
+    }
+    assert_eq!(s.balance(&s.market), 500);
+}

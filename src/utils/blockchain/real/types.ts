@@ -49,6 +49,8 @@ export interface Listing {
 	price: Uint128
 	listed_at: number
 	seq: number
+	/** Fee and royalty locked in when the NFT was listed. */
+	terms: { fee_bps: number; royalty_bps: number; royalty_recipient: string | null }
 }
 
 export interface ContractBid {

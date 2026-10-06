@@ -29,6 +29,29 @@ pub struct Collection {
     pub registered_at: u64,
 }
 
+/// Fee and royalty a sale pays out. Locked into each listing when it's
+/// created, so later config changes can't change what the seller receives.
+#[cw_serde]
+pub struct SaleTerms {
+    pub fee_bps: u16,
+    pub royalty_bps: u16,
+    pub royalty_recipient: Option<Addr>,
+}
+
+impl SaleTerms {
+    pub fn current(config: &Config, collection: &Collection) -> Self {
+        SaleTerms {
+            fee_bps: config.fee_bps,
+            royalty_bps: if collection.royalty_recipient.is_some() {
+                collection.royalty_bps
+            } else {
+                0
+            },
+            royalty_recipient: collection.royalty_recipient.clone(),
+        }
+    }
+}
+
 #[cw_serde]
 pub struct Listing {
     pub collection: Addr,
@@ -39,6 +62,8 @@ pub struct Listing {
     pub listed_at: u64,
     /// Ever-increasing number used to sort by listing time.
     pub seq: u64,
+    /// Fee and royalty locked in when the NFT was listed.
+    pub terms: SaleTerms,
 }
 
 #[cw_serde]

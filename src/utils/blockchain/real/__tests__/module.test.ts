@@ -98,7 +98,7 @@ describe('when the marketplace is not deployed', () => {
 describe('with the marketplace deployed', () => {
 	const registered = {
 		address: NFT,
-		collection: { name: 'Cousins', royalty_bps: 450, enabled: true, registered_at: 1_700_000_000 },
+		collection: { name: 'Cousins', royalty_bps: 450, royalty_recipient: 'terra1artist', enabled: true, registered_at: 1_700_000_000 },
 		stats: { volume: '3000000', volume_24h: '1000000', sales: 1, listed: 1, floor_price: '2000000' },
 	}
 

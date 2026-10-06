@@ -143,8 +143,12 @@ async function getTokenTradingDetailsForUser(nftContractAddress: string, tokenId
 		sellPriceCurrency: listing ? 'LUNA' : undefined,
 		owner,
 		sellFees: {
-			luartFee: bpsToPercent(config?.fee_bps ?? 0),
-			royaltyFee: bpsToPercent(registered?.collection.royalty_bps ?? 0),
+			// A listing pays the fees locked in when it was listed.
+			luartFee: bpsToPercent(listing?.terms?.fee_bps ?? config?.fee_bps ?? 0),
+			royaltyFee: bpsToPercent(
+				listing?.terms?.royalty_bps ??
+					(registered?.collection.royalty_recipient ? registered.collection.royalty_bps : 0)
+			),
 			txFee: ESTIMATED_TX_FEE,
 		},
 		canUserSell: isOwner && !isListed,
@@ -159,8 +163,9 @@ async function buyNow(nftContractAddress: string, tokenId: string, amount: numbe
 	assertLuna(currency)
 	const listing = await marketplace.getListing(nftContractAddress, tokenId)
 	if (!listing) throw new Error('This NFT is no longer for sale')
-	// Pay the exact on-chain price; refuse if it changed since the page loaded.
-	if (amount && Math.abs(Number(toUluna(amount)) - Number(listing.price)) > 1) {
+	// Pay the exact on-chain price; refuse if it changed since the page loaded
+	// (or if the page never showed a price).
+	if (!amount || Math.abs(Number(toUluna(amount)) - Number(listing.price)) > 1) {
 		throw new Error(`The price changed to ${fromUluna(listing.price)} LUNA, please reload the page`)
 	}
 	const receipt = await marketplace.buy(nftContractAddress, tokenId, listing.price)

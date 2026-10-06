@@ -28,6 +28,7 @@
         "price",
         "seller",
         "seq",
+        "terms",
         "token_id"
       ],
       "properties": {
@@ -52,8 +53,47 @@
           "format": "uint64",
           "minimum": 0.0
         },
+        "terms": {
+          "description": "Fee and royalty locked in when the NFT was listed.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/SaleTerms"
+            }
+          ]
+        },
         "token_id": {
           "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SaleTerms": {
+      "description": "Fee and royalty a sale pays out. Locked into each listing when it's created, so later config changes can't change what the seller receives.",
+      "type": "object",
+      "required": [
+        "fee_bps",
+        "royalty_bps"
+      ],
+      "properties": {
+        "fee_bps": {
+          "type": "integer",
+          "format": "uint16",
+          "minimum": 0.0
+        },
+        "royalty_bps": {
+          "type": "integer",
+          "format": "uint16",
+          "minimum": 0.0
+        },
+        "royalty_recipient": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Addr"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
