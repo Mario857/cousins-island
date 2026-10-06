@@ -1,0 +1,29 @@
+[package]
+name = "cousins-marketplace"
+description = "NFT marketplace for Cousins Island on Terra (escrowed listings, escrowed bids, on-chain stats)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+library = []
+
+[dependencies]
+cosmwasm-schema = { workspace = true }
+cosmwasm-std = { workspace = true }
+cw-storage-plus = { workspace = true }
+cw2 = { workspace = true }
+cw-utils = { workspace = true }
+cw721 = { workspace = true }
+thiserror = { workspace = true }
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+
+[dev-dependencies]
+cw-multi-test = { workspace = true }
+anyhow = "1"
+cw721-metadata-onchain = { workspace = true, features = ["library"] }

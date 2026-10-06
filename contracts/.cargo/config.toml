@@ -1,0 +1,8 @@
+[resolver]
+# Pick dependency versions that still build on Rust 1.81 (the Terra-compatible toolchain).
+incompatible-rust-versions = "fallback"
+
+[alias]
+wasm = "build --release --lib --target wasm32-unknown-unknown"
+unit-test = "test --lib"
+schema = "run --bin schema"

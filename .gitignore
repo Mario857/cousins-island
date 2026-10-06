@@ -6,3 +6,5 @@ node_modules/
 .idea
 tsconfig.tsbuildinfo
 .vscode
+contracts/target/
+contracts/artifacts/

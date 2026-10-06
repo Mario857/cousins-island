@@ -1,0 +1,33 @@
+[workspace]
+members = ["marketplace", "cousins-nft"]
+resolver = "2"
+
+[workspace.package]
+version = "1.0.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/Mario857/cousins-island"
+# Terra (phoenix-1) runs wasmvm 2.2, which rejects Wasm built by Rust >= 1.82.
+rust-version = "1.81"
+
+[workspace.dependencies]
+cosmwasm-schema = "~2.2"
+cosmwasm-std = "~2.2"
+cw-storage-plus = "2.0"
+cw2 = "2.0"
+cw-utils = "2.0"
+cw721 = "=0.20.0"
+cw721-metadata-onchain = "=0.20.0"
+thiserror = "1.0"
+cw-multi-test = "2"
+
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+panic = "abort"
+incremental = false
+overflow-checks = true
