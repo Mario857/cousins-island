@@ -36,16 +36,15 @@ jobs:
       # optimizer 0.16.1 = Rust 1.81. Don't bump to 0.17+: its output needs CosmWasm 3 on chain.
       - name: Optimize
         run: |
-          set -o pipefail
+          annotate() {
+            # Job logs need a GitHub sign-in; annotations don't, so surface errors there.
+            echo "::error title=$1::$(tail -c 3000 optimizer.log | tr '\n' ' ' | sed 's/%/%25/g')"
+          }
           docker run --rm -v "$(pwd)":/code \
             --mount type=volume,source="contracts_cache",target=/target \
             --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-            cosmwasm/optimizer:0.16.1 2>&1 | tee optimizer.log || {
-              # Logs need a GitHub sign-in; annotations don't, so surface the error there.
-              echo "::error title=optimizer failed::$(tail -c 1800 optimizer.log | tr '\n' ' ')"
-              exit 1
-            }
-          ls -la artifacts
+            cosmwasm/optimizer:0.16.1 > optimizer.log 2>&1 || { annotate "optimizer failed"; exit 1; }
+          ls -la . artifacts >> optimizer.log 2>&1 || { annotate "no artifacts folder"; exit 1; }
           cat artifacts/checksums.txt
       - uses: dtolnay/rust-toolchain@1.81.0
       - name: Check Wasm against Terra's capabilities

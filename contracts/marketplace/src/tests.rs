@@ -779,3 +779,47 @@ fn migrate_keeps_state() {
         .unwrap();
     assert_eq!(s.stats().listed, 1);
 }
+
+#[test]
+fn test_collection_accepts_on_chain_svg_metadata() {
+    // Same shape the deploy script mints: SVG in image_data plus attributes.
+    let mut s = Suite::new();
+    let admin = s.admin.clone();
+    let svg = r##"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><rect width="240" height="240" fill="#BAE6FD"/></svg>"##;
+    s.app
+        .execute_contract(
+            admin.clone(),
+            s.nft.clone(),
+            &nft_msg::ExecuteMsg::Mint {
+                token_id: "100".into(),
+                owner: admin.to_string(),
+                token_uri: None,
+                extension: Some(cw721::msg::NftExtensionMsg {
+                    name: Some("Cousin Island #100".into()),
+                    description: Some("Test".into()),
+                    image_data: Some(svg.into()),
+                    attributes: Some(vec![cw721::state::Trait {
+                        display_type: None,
+                        trait_type: "Sky".into(),
+                        value: "Noon".into(),
+                    }]),
+                    ..Default::default()
+                }),
+            },
+            &[],
+        )
+        .unwrap();
+    let info: cw721::msg::NftInfoResponse<Option<cw721::state::NftExtension>> = s
+        .app
+        .wrap()
+        .query_wasm_smart(&s.nft, &nft_msg::QueryMsg::NftInfo { token_id: "100".into() })
+        .unwrap();
+    let ext = info.extension.unwrap();
+    assert_eq!(ext.image_data.as_deref(), Some(svg));
+    assert_eq!(ext.attributes.unwrap()[0].value, "Noon");
+    // And it trades like any other token.
+    s.list(&admin, "100", 1_000).unwrap();
+    let bob = s.bob.clone();
+    s.buy(&bob, "100", 1_000).unwrap();
+    assert_eq!(s.owner_of("100"), bob);
+}

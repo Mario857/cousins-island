@@ -51,6 +51,7 @@
     "swiper": "^14.3.0"
   },
   "devDependencies": {
+    "@cosmjs/crypto": "^0.38.1",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@types/big.js": "^6.2.2",
