@@ -35,16 +35,26 @@ jobs:
       - uses: actions/checkout@v4
       # optimizer 0.16.1 = Rust 1.81. Don't bump to 0.17+: its output needs CosmWasm 3 on chain.
       - name: Optimize
+        shell: bash
         run: |
-          annotate() {
-            # Job logs need a GitHub sign-in; annotations don't, so surface errors there.
-            echo "::error title=$1::$(tail -c 3000 optimizer.log | tr '\n' ' ' | sed 's/%/%25/g')"
-          }
+          set +e
           docker run --rm -v "$(pwd)":/code \
             --mount type=volume,source="contracts_cache",target=/target \
             --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-            cosmwasm/optimizer:0.16.1 > optimizer.log 2>&1 || { annotate "optimizer failed"; exit 1; }
-          ls -la . artifacts >> optimizer.log 2>&1 || { annotate "no artifacts folder"; exit 1; }
+            cosmwasm/optimizer:0.16.1 > optimizer.log 2>&1
+          status=$?
+          ls -la artifacts >> optimizer.log 2>&1 || status=1
+          # Job logs need a GitHub sign-in; the run summary page doesn't.
+          {
+            echo "### Optimizer (exit $status)"
+            echo '```'
+            tail -n 80 optimizer.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$status" -ne 0 ]; then
+            echo "::error title=optimizer::exit $status, see the run summary"
+            exit 1
+          fi
           cat artifacts/checksums.txt
       - uses: dtolnay/rust-toolchain@1.81.0
       - name: Check Wasm against Terra's capabilities
