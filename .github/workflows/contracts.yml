@@ -28,38 +28,40 @@ jobs:
       - run: cargo clippy --locked --all-targets -- -D warnings
 
   build:
-    name: Build optimized Wasm
+    name: Build Wasm
     needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # optimizer 0.16.1 = Rust 1.81. Don't bump to 0.17+: its output needs CosmWasm 3 on chain.
-      - name: Optimize
-        shell: bash
-        run: |
-          set +e
-          docker run --rm -v "$(pwd)":/code \
-            --mount type=volume,source="contracts_cache",target=/target \
-            --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-            cosmwasm/optimizer:0.16.1 > optimizer.log 2>&1
-          status=$?
-          ls -la artifacts >> optimizer.log 2>&1 || status=1
-          # Job logs need a GitHub sign-in; the run summary page doesn't.
-          {
-            echo "### Optimizer (exit $status)"
-            echo '```'
-            tail -n 80 optimizer.log
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
-          if [ "$status" -ne 0 ]; then
-            echo "::error title=optimizer::exit $status, see the run summary"
-            exit 1
-          fi
-          cat artifacts/checksums.txt
+      # Rust 1.81 is the newest toolchain whose Wasm output Terra's wasmvm 2.2 accepts
+      # (1.82+ turns on reference-types, which wasmvm 2.2 rejects).
       - uses: dtolnay/rust-toolchain@1.81.0
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: contracts
+      - name: Compile
+        env:
+          RUSTFLAGS: "-C link-arg=-s"
+        run: cargo build --locked --release --lib --target wasm32-unknown-unknown -p cousins-marketplace -p cousins-nft
+      - name: Install wasm-opt and cosmwasm-check
+        run: |
+          npm install --global binaryen@123
+          cargo install cosmwasm-check --version "~2.2" --locked
+      - name: Optimize
+        run: |
+          mkdir -p artifacts
+          for name in cousins_marketplace cousins_nft; do
+            # Only the Wasm features wasmvm 2.2 accepts (no bulk-memory / reference-types).
+            wasm-opt -Os --strip-debug --strip-producers \
+              --mvp-features --enable-sign-ext --enable-mutable-globals \
+              --enable-nontrapping-float-to-int --enable-multivalue \
+              "target/wasm32-unknown-unknown/release/$name.wasm" -o "artifacts/$name.wasm"
+          done
+          (cd artifacts && sha256sum *.wasm > checksums.txt && ls -la && cat checksums.txt)
       - name: Check Wasm against Terra's capabilities
         run: |
-          cargo install cosmwasm-check --version "~2.2" --locked
           cosmwasm-check \
             --available-capabilities iterator,staking,stargate,cosmwasm_1_1,cosmwasm_1_2,cosmwasm_1_3,cosmwasm_1_4,token_factory \
             artifacts/*.wasm
